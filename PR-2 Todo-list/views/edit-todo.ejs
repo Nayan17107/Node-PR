@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Todo</title>
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --card: #fff;
+            --primary: #3b82f6;
+            --muted: #6b7280;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            color: #111;
+        }
+
+        .edit-container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 18px;
+        }
+
+        .edit-card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--primary);
+            border: 1px solid #dbeafe;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        label {
+            font-size: 13px;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input,
+        textarea,
+        input[type=time] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e6e9ef;
+            border-radius: 6px;
+        }
+
+        /* Table form layout */
+        form table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        form td {
+            padding: 10px 8px;
+            vertical-align: middle
+        }
+
+        form td:first-child {
+            width: 140px;
+            text-align: right;
+            padding-right: 16px;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .actions-row td {
+            padding-top: 14px;
+            text-align: left
+        }
+
+        /* Responsive adjustments */
+        @media (max-width:600px) {
+            form td:first-child {
+                display: block;
+                text-align: left;
+                padding-right: 0;
+                margin-bottom: 6px
+            }
+
+            form td {
+                display: block;
+                padding: 6px 0
+            }
+
+            .actions-row td {
+                padding-top: 8px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="edit-container">
+        <div class="edit-card">
+            <header>
+                <h2>Edit Todo</h2>
+                <div>
+                    <a class="btn btn-secondary" href="/">← Back</a>
+                </div>
+            </header>
+
+            <form action="/update-todo/<%= todo.id %>" method="post">
+                <table border="1" cellpadding="5">
+                    <tr>
+                        <td>ID:</td>
+                        <td><input type="text" name="id" value="<%= todo.id %>" readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Title:</td>
+                        <td><input type="text" name="title" value="<%= todo.title %>"></td>
+                    </tr>
+                    <tr>
+                        <td>Description:</td>
+                        <td><textarea name="description" rows="2"><%= todo.description %></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Time:</td>
+                        <td>
+                            <input type="time" name="time" value="<%= todo.time %>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><button type="submit">Update Todo</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <footer style="text-align:center;margin-top:12px;color:#6b7280;font-size:13px">Edit mode — changes are in-memory
+            only</footer>
+    </div>
+</body>
+
+</html>

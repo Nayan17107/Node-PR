@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --primary: #3b82f6;
+            --muted: #6b7280;
+            --accent: #10b981;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            font-family: Inter, Arial, Helvetica, sans-serif;
+            color: #111
+        }
+
+        .app {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #0f172a
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 20px
+        }
+
+        .form-card,
+        .list-card {
+            background: var(--card);
+            border-radius: 8px;
+            padding: 18px;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06)
+        }
+
+        .form-card h2 {
+            margin: 0 0 12px;
+            font-size: 18px
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: var(--muted)
+        }
+
+        input[type=text],
+        textarea,
+        input[type=time],
+        select {
+            padding: 10px;
+            border: 1px solid #e6e9ef;
+            border-radius: 6px;
+            font-size: 14px
+        }
+
+        textarea {
+            resize: vertical
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .btn {
+            background: var(--primary);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--primary);
+            border: 1px solid #dbeafe;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        thead td {
+            font-weight: 700;
+            color: var(--muted);
+            padding: 10px 8px;
+            border-bottom: 1px solid #eef2f7
+        }
+
+        tbody td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #f3f5f8
+        }
+
+        .action-links a {
+            margin-right: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        .empty {
+            color: var(--muted);
+            text-align: center;
+            padding: 24px
+        }
+
+        @media (max-width:800px) {
+            .main {
+                grid-template-columns: 1fr
+            }
+
+            .app {
+                padding: 12px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>Todo List</h1>
+            <div class="actions">
+                <button class="btn" onclick="location.reload();" type="button">Refresh</button>
+            </div>
+        </header>
+        <main class="main">
+            <section class="form-card">
+                <h2>Add Task</h2>
+                <form action="/add-todo" method="post" style="padding-bottom:20px; width: 100%; text-align: left;">
+                    <table border="1" cellpadding="3" style="width: 100%;">
+                        <tr>
+                            <td>Id:</td>
+                            <td><input type="text" name="id" required></td>
+                        </tr>
+                        <tr>
+                            <td>Title:</td>
+                            <td><input type="text" name="title" required></td>
+                        </tr>
+                        <tr>
+                            <td>Description:</td>
+                            <td><textarea name="description" rows="2"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Time:</td>
+                            <td>
+                                <input type="time" name="time" class="small">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><button type="submit">Add Todo</button></td>
+                        </tr>
+                    </table>
+                </form>
+            </section>
+            <section class="list-card">
+                <h3 style="margin-top:0;">Tasks</h3>
+                <table border="0" cellpadding="6" style="width:100%; margin-top:12px;">
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>Title</td>
+                            <td>Description</td>
+                            <td>Time</td>
+                            <td colspan="2">Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% todos.forEach((t)=>{ %>
+                            <tr>
+                                <td>
+                                    <%= t.id %>
+                                </td>
+                                <td>
+                                    <%= t.title %>
+                                </td>
+                                <td>
+                                    <%= t.description %>
+                                </td>
+                                <td>
+                                    <%= t.time %>
+                                </td>
+                                <td><a href="/edit-todo/<%= t.id %>">Edit</a></td>
+                                <td><a href="/delete-todo/<%= t.id %>">Delete</a></td>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <footer style="text-align:center;margin-top:18px;color:#6b7280;font-size:13px">Made with ❤️ — Simple Todo App
+        </footer>
+    </div>
+</body>
+
+</html>
