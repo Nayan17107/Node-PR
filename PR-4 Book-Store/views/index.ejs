@@ -1,0 +1,100 @@
+<%- include('partials/header') %>
+
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="card-custom">
+                <h4 class="mb-3">Add New Book</h4>
+                <form action="/add-book" method="post" class="row g-3">
+                    <div class="col-12">
+                        <label class="form-label">Title</label>
+                        <input class="form-control" type="text" name="title" required />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Author</label>
+                        <input class="form-control" type="text" name="author" required />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Published</label>
+                        <input class="form-control" type="date" name="publishedDate" />
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Price</label>
+                        <input class="form-control" type="number" name="price" step="0.01" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="col-12 text-end">
+                        <button class="btn btn-accent" type="submit">Add Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card-custom">
+                <h4 class="mb-3">Book List</h4>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div><span class="badge-count">Total: <%= typeof count !=='undefined' ? count : (books ?
+                                books.length : 0) %></span></div>
+                    <div class="ms-auto"><input id="bookSearch" type="search"
+                            class="form-control form-control-sm search-input" placeholder="Search title or author..." />
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Published</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% books.forEach((book, i)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= i+1 %>
+                                    </td>
+                                    <td>
+                                        <%= book.title %>
+                                    </td>
+                                    <td>
+                                        <%= book.author %>
+                                    </td>
+
+                                    <td>
+                                        <%= book.publishedDate ? book.publishedDate.toISOString().slice(0,10) : '' %>
+                                    </td>
+                                    <td>
+                                        <%= book.price %>
+                                    </td>
+                                    <td>
+                                        <%= book.description %>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-sm btn-outline-primary me-2"
+                                            href="/edit-book/<%= book.id %>">Edit</a>
+                                        <a class="btn btn-sm btn-outline-danger"
+                                            href="/delete-book/<%= book.id %>">Delete</a>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% if (!books || books.length===0) { %>
+                    <div class="text-center text-muted py-4">No books yet — add one to get started.</div>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <%- include('partials/footer') %>
