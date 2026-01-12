@@ -63,7 +63,7 @@
                                         <%= i+1 %>
                                     </td>
                                     <td>
-                                        <%= book.title %>
+                                        <div class="title-with-accent"><%= book.title %></div>
                                     </td>
                                     <td>
                                         <%= book.author %>
@@ -73,16 +73,18 @@
                                         <%= book.publishedDate ? book.publishedDate.toISOString().slice(0,10) : '' %>
                                     </td>
                                     <td>
-                                        <%= book.price %>
+                                        <% if (typeof book.price !== 'undefined' && book.price !== null && book.price !== '') { %>
+                                            <span class="price-badge">$<%= parseFloat(book.price).toFixed(2) %></span>
+                                        <% } %>
                                     </td>
                                     <td>
                                         <%= book.description %>
                                     </td>
                                     <td>
-                                        <a class="btn btn-sm btn-outline-primary me-2"
-                                            href="/edit-book/<%= book.id %>">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger"
-                                            href="/delete-book/<%= book.id %>">Delete</a>
+                                        <div class="action-row">
+                                            <a class="btn btn-sm btn-edit" href="/edit-book/<%= book.id %>">Edit</a>
+                                            <a class="btn btn-sm btn-delete" href="/delete-book/<%= book.id %>">Delete</a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <% }) %>
