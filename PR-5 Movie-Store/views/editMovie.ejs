@@ -1,55 +1,54 @@
 <%- include('partials/header') %>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Movie</li>
-        </ol>
-    </nav>
-
     <div class="row justify-content-center">
         <div class="col-lg-7">
-            <div class="card-custom">
-                <div class="d-flex align-items-center gap-3 mb-3">
-                    <h4 class="mb-0">Edit Movie</h4>
-                    <div class="ms-auto">
-                        <% if (movie.poster) { %>
-                            <img src="/uploads/<%= movie.poster %>" alt="<%= movie.title %>"
-                                style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #e5e7eb;" />
-                            <% } %>
-                    </div>
+            <div class="glass-card">
+                <div class="d-flex align-items-center mb-4">
+                    <h3 class="mb-0">⚙ Edit Movie</h3>
+
+                    <% if (movie.poster) { %>
+                        <img src="/uploads/<%= movie.poster %>"
+                            style="width:70px;height:70px;object-fit:cover;border-radius:12px;margin-left:auto;">
+                        <% } %>
                 </div>
-                <form action="/update-movie/<%= movie.id %>" method="post" class="row g-3"
-                    enctype="multipart/form-data">
+
+                <form action="/update-movie/<%= movie.id %>" method="post" enctype="multipart/form-data"
+                    class="row g-3">
+
                     <div class="col-12">
                         <label class="form-label">Title</label>
-                        <input class="form-control" type="text" name="title" value="<%= movie.title %>" required />
+                        <input class="form-control" type="text" name="title" value="<%= movie.title %>" required>
                     </div>
+
                     <div class="col-12">
                         <label class="form-label">Director</label>
-                        <input class="form-control" type="text" name="director" value="<%= movie.director %>"
-                            required />
+                        <input class="form-control" type="text" name="director" value="<%= movie.director %>" required>
                     </div>
+
                     <div class="col-md-6">
                         <label class="form-label">Release Date</label>
                         <input class="form-control" type="date" name="releaseDate"
-                            value="<%= movie.releaseDate ? movie.releaseDate.toISOString().slice(0,10) : '' %>" />
+                            value="<%= movie.releaseDate ? movie.releaseDate.toISOString().slice(0,10) : '' %>">
                     </div>
+
                     <div class="col-md-6">
                         <label class="form-label">Rating</label>
-                        <input class="form-control" type="number" name="rating" step="0.1" min="0" max="10"
-                            value="<%= movie.rating %>" />
+                        <input class="form-control" type="number" step="0.1" min="0" max="10" name="rating"
+                            value="<%= movie.rating %>">
                     </div>
+
                     <div class="col-12">
                         <label class="form-label">Poster</label>
-                        <input class="form-control" type="file" name="poster" accept="image/*" />
+                        <input class="form-control" type="file" name="poster" accept="image/*">
                     </div>
+
                     <div class="col-12">
                         <label class="form-label">Description</label>
                         <textarea class="form-control" name="description" rows="3"><%= movie.description %></textarea>
                     </div>
+
                     <div class="col-12 text-end">
-                        <button class="btn btn-accent" type="submit">Save Changes</button>
+                        <button class="btn btn-accent">Save Changes</button>
                         <a href="/" class="btn btn-outline-secondary ms-2">Cancel</a>
                     </div>
                 </form>

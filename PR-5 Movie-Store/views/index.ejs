@@ -1,156 +1,173 @@
 <%- include('partials/header') %>
 
+    <!-- ================= ADD MOVIE ================= -->
     <div class="row justify-content-center mb-5">
         <div class="col-lg-8">
-            <div class="card-custom">
-                <h4 class="mb-3">Add New Movie</h4>
-                <form action="/add-movie" method="post" class="row g-3" enctype="multipart/form-data">
-                    <div class="col-12">
+            <div class="glass-card">
+                <h3 class="mb-4">🎬 Add New Movie</h3>
+
+                <form action="/add-movie" method="post" enctype="multipart/form-data" class="row g-3">
+                    <div class="col-md-6">
                         <label class="form-label">Title</label>
-                        <input class="form-control" type="text" name="title" required />
+                        <input class="form-control" type="text" name="title" required>
                     </div>
-                    <div class="col-12">
+
+                    <div class="col-md-6">
                         <label class="form-label">Director</label>
-                        <input class="form-control" type="text" name="director" required />
+                        <input class="form-control" type="text" name="director" required>
                     </div>
+
                     <div class="col-md-6">
                         <label class="form-label">Release Date</label>
-                        <input class="form-control" type="date" name="releaseDate" />
+                        <input class="form-control" type="date" name="releaseDate">
                     </div>
+
                     <div class="col-md-6">
                         <label class="form-label">Rating</label>
-                        <input class="form-control" type="number" name="rating" step="0.1" min="0" max="10" />
+                        <input class="form-control" type="number" step="0.1" min="0" max="10" name="rating">
                     </div>
+
                     <div class="col-12">
                         <label class="form-label">Poster</label>
-                        <input class="form-control" type="file" name="poster" accept="image/*" />
+                        <input class="form-control" type="file" name="poster" accept="image/*">
                     </div>
+
                     <div class="col-12">
                         <label class="form-label">Description</label>
                         <textarea class="form-control" name="description" rows="3"></textarea>
                     </div>
+
                     <div class="col-12 text-end">
-                        <button class="btn btn-accent" type="submit">Add Movie</button>
+                        <button class="btn btn-accent">Add Movie</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card-custom">
-                <h4 class="mb-3">Movie List</h4>
-                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-                    <div>
-                        <span class="badge-count">Total:
-                            <%= typeof count !=='undefined' ? count : (movies ? movies.length : 0) %>
-                        </span>
-                    </div>
-                    <div class="search-filter-container mb-4">
-                        <form action="/" method="get" class="d-flex gap-2">
-                            <input id="movieSearch" type="search" name="q" class="search-input"
-                                placeholder="Search title or director..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>" />
-                            <select id="sortSelect" name="sort" class="form-select" onchange="this.form.submit()">
-                                <option value="">Sort By</option>
-                                <option value="title-asc" <%= typeof sortOption !== 'undefined' && sortOption === 'title-asc' ? 'selected' : '' %>>Title A-Z</option>
-                                <option value="release-newest" <%= typeof sortOption !== 'undefined' && sortOption === 'release-newest' ? 'selected' : '' %>>Newest release</option>
-                                <option value="release-oldest" <%= typeof sortOption !== 'undefined' && sortOption === 'release-oldest' ? 'selected' : '' %>>Oldest release</option>
-                                <option value="rating-high" <%= typeof sortOption !== 'undefined' && sortOption === 'rating-high' ? 'selected' : '' %>>Rating high-low</option>
-                                <option value="rating-low" <%= typeof sortOption !== 'undefined' && sortOption === 'rating-low' ? 'selected' : '' %>>Rating low-high</option>
-                            </select>
-                            <button type="submit" class="btn btn-sm btn-primary" style="display:none;">Search</button>
-                        </form>
-                    </div>
-                </div>
+    <!-- ================= SEARCH & SORT ================= -->
+    <div class="glass-card mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <span>Total Movies:
+                <strong>
+                    <%= typeof count !=='undefined' ? count : (movies ? movies.length : 0) %>
+                </strong>
+            </span>
 
-                <div class="row g-4" id="movieGrid">
-                    <% movies.forEach((movie, i)=> { %>
-                        <div class="col-6 movie-item" data-title="<%= movie.title %>"
-                            data-director="<%= movie.director %>"
-                            data-release="<%= movie.releaseDate ? movie.releaseDate.toISOString() : '' %>"
-                            data-rating="<%= typeof movie.rating !== 'undefined' && movie.rating !== null && movie.rating !== '' ? movie.rating : '' %>">
+            <form method="get" class="search-bar">
+                <input type="search" name="q" class="form-control search-input"
+                    placeholder="Search title or director..."
+                    value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
 
-                            <div class="card h-100 shadow-sm border-0">
-                                <% if (movie.poster) { %>
-                                    <img src="/uploads/<%= movie.poster %>" class="card-img-top"
-                                        alt="<%= movie.title %>" style="height: 300px; object-fit: cover;">
-                                    <% } else { %>
-                                        <div class="card-img-top d-flex align-items-center justify-content-center bg-light"
-                                            style="height: 300px;">
-                                            <span class="text-muted">No Poster</span>
-                                        </div>
-                                        <% } %>
+                <select name="sort" class="form-select" onchange="this.form.submit()">
+                    <option value="">Sort</option>
 
-                                            <div class="card-body">
-                                                <h5 class="card-title text-truncate" title="<%= movie.title %>">
-                                                    <%= movie.title %>
-                                                </h5>
-                                                <p class="card-text mb-1">
-                                                    <strong>Director:</strong>
-                                                    <%= movie.director %>
-                                                </p>
-                                                <p class="card-text mb-1">
-                                                    <strong>Release:</strong>
-                                                    <%= movie.releaseDate ? movie.releaseDate.toISOString().slice(0,10)
-                                                        : 'N/A' %>
-                                                </p>
-                                                <p class="card-text mb-2">
-                                                    <strong>Rating:</strong>
-                                                    <% if (typeof movie.rating !=='undefined' && movie.rating !==null &&
-                                                        movie.rating !=='' ) { %>
-                                                        <span class="badge badge-rating">
-                                                            <%= parseFloat(movie.rating).toFixed(1) %>
-                                                        </span>
-                                                        <% } else { %>
-                                                            <span class="text-muted">N/A</span>
-                                                            <% } %>
-                                                </p>
-                                                <p class="card-text small text-muted text-truncate">
-                                                    <%= movie.description %>
-                                                </p>
-                                            </div>
-                                            <div class="card-footer bg-white border-0 d-flex justify-content-between">
-                                                <a class="btn btn-sm btn-outline-primary"
-                                                    href="/edit-movie/<%= movie.id %>">Edit</a>
-                                                <a class="btn btn-sm btn-outline-danger"
-                                                    href="/delete-movie/<%= movie.id %>">Delete</a>
-                                            </div>
-                            </div>
-                        </div>
-                        <% }) %>
-                </div>
+                    <option value="title-asc" <%= typeof sortOption !== 'undefined' && sortOption === 'title-asc' ? 'selected' : '' %>>
+                        Title A-Z
+                    </option>
 
-                <% if (!movies || movies.length===0) { %>
-                    <div class="text-center text-muted py-4">No movies yet. Add one to get started.</div>
-                    <% } %>
+                    <option value="release-newest" <%= typeof sortOption !== 'undefined' && sortOption === 'release-newest' ? 'selected' : '' %>>
+                        Newest
+                    </option>
 
-                        <!-- Pagination Controls -->
-                        <% if (typeof totalPages !=='undefined' && totalPages> 1) { %>
-                            <nav aria-label="Page navigation" class="mt-4">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item <%= currentPage == 1 ? 'disabled' : '' %>">
-                                        <a class="page-link" href="/?page=<%= currentPage - 1 %><%= typeof searchQuery !== 'undefined' && searchQuery ? '&q=' + searchQuery : '' %><%= typeof sortOption !== 'undefined' && sortOption ? '&sort=' + sortOption : '' %>" tabindex="-1"
-                                            aria-disabled="true">Previous</a>
-                                    </li>
+                    <option value="release-oldest" <%= typeof sortOption !== 'undefined' && sortOption === 'release-oldest' ? 'selected' : '' %>>
+                        Oldest
+                    </option>
 
-                                    <% for(let i=1; i <=totalPages; i++) { %>
-                                        <li class="page-item <%= currentPage == i ? 'active' : '' %>">
-                                            <a class="page-link" href="/?page=<%= i %><%= typeof searchQuery !== 'undefined' && searchQuery ? '&q=' + searchQuery : '' %><%= typeof sortOption !== 'undefined' && sortOption ? '&sort=' + sortOption : '' %>">
-                                                <%= i %>
-                                            </a>
-                                        </li>
-                                        <% } %>
+                    <option value="rating-high" <%= typeof sortOption !== 'undefined' && sortOption === 'rating-high' ? 'selected' : '' %>>
+                        Rating High
+                    </option>
 
-                                            <li class="page-item <%= currentPage == totalPages ? 'disabled' : '' %>">
-                                                <a class="page-link" href="/?page=<%= currentPage + 1 %><%= typeof searchQuery !== 'undefined' && searchQuery ? '&q=' + searchQuery : '' %><%= typeof sortOption !== 'undefined' && sortOption ? '&sort=' + sortOption : '' %>">Next</a>
-                                            </li>
-                                </ul>
-                            </nav>
-                            <% } %>
-            </div>
+                    <option value="rating-low" <%= typeof sortOption !== 'undefined' && sortOption === 'rating-low' ? 'selected' : '' %>>
+                        Rating Low
+                    </option>
+                </select>
+
+            </form>
         </div>
     </div>
+
+    <!-- ================= MOVIE GRID ================= -->
+    <div class="row g-4 justify-content-center">
+        <% movies.forEach(movie=> { %>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="movie-card h-100">
+
+                    <% if (movie.poster) { %>
+                        <img src="/uploads/<%= movie.poster %>" class="movie-poster" alt="<%= movie.title %>">
+                        <% } else { %>
+                            <div class="movie-poster d-flex align-items-center justify-content-center text-muted">
+                                No Poster
+                            </div>
+                            <% } %>
+
+                                <div class="p-3">
+                                    <h6 class="text-truncate" title="<%= movie.title %>">
+                                        <%= movie.title %>
+                                    </h6>
+
+                                    <small class="text-white d-block mb-2">
+                                        <%= movie.director %>
+                                    </small>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <% if (movie.rating) { %>
+                                            <span class="rating-badge">
+                                                ⭐ <%= parseFloat(movie.rating).toFixed(1) %>
+                                            </span>
+                                            <% } else { %>
+                                                <span class="text-muted">N/A</span>
+                                                <% } %>
+
+                                                    <div class="d-flex gap-2">
+                                                        <a href="/edit-movie/<%= movie.id %>"
+                                                            class="btn btn-sm btn-outline-primary">Edit</a>
+                                                        <a href="/delete-movie/<%= movie.id %>"
+                                                            class="btn btn-sm btn-outline-danger">Delete</a>
+                                                    </div>
+                                    </div>
+                                </div>
+
+                </div>
+            </div>
+            <% }) %>
     </div>
 
-    <%- include('partials/footer') %>
+    <!-- ================= EMPTY STATE ================= -->
+    <% if (!movies || movies.length===0) { %>
+        <div class="text-center text-muted py-5">
+            No movies found. Add your first movie.
+        </div>
+        <% } %>
+
+            <!-- ================= PAGINATION ================= -->
+            <% if (typeof totalPages !=='undefined' && totalPages> 1) { %>
+                <nav class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item <%= currentPage == 1 ? 'disabled' : '' %>">
+                            <a class="page-link"
+                                href="/?page=<%= currentPage - 1 %><%= searchQuery ? '&q=' + searchQuery : '' %><%= sortOption ? '&sort=' + sortOption : '' %>">
+                                Previous
+                            </a>
+                        </li>
+
+                        <% for (let i=1; i <=totalPages; i++) { %>
+                            <li class="page-item <%= currentPage == i ? 'active' : '' %>">
+                                <a class="page-link"
+                                    href="/?page=<%= i %><%= searchQuery ? '&q=' + searchQuery : '' %><%= sortOption ? '&sort=' + sortOption : '' %>">
+                                    <%= i %>
+                                </a>
+                            </li>
+                            <% } %>
+
+                                <li class="page-item <%= currentPage == totalPages ? 'disabled' : '' %>">
+                                    <a class="page-link"
+                                        href="/?page=<%= currentPage + 1 %><%= searchQuery ? '&q=' + searchQuery : '' %><%= sortOption ? '&sort=' + sortOption : '' %>">
+                                        Next
+                                    </a>
+                                </li>
+                    </ul>
+                </nav>
+                <% } %>
+
+                    <%- include('partials/footer') %>
