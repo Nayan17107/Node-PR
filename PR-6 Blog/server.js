@@ -2,20 +2,27 @@ const express = require('express');
 const port = 8003;
 const app = express();
 
+require('./Config/dbconnection')
+
 app.set('view engine', 'ejs');
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('Public'));
+app.use("/uploads", express.static('Uploads'))
+
+const blogRoutes = require('./Routes/blog.routes')
+app.use('/blog', blogRoutes)
+
 
 app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.get('/view-blog', (req, res) => {
-    res.render('Blog/ViewBlog')
+app.get('/add-blog', (req, res) => {
+    res.render('blog/AddBlog')
 })
 
-app.get('/add-blog', (req, res) => {
-    res.render('Blog/AddBlog')
+app.get('/view-blog', (req, res) => {
+    res.render('blog/ViewBlog')
 })
 
 app.listen(port, () => {
