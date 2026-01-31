@@ -1,6 +1,6 @@
-exports.deshborad = async (req, res) => {
+exports.dashboard = async (req, res) => {
     try {
-        res.render('dashboard')
+        res.render('index')
     } catch (error) {
         console.log(error)
     }

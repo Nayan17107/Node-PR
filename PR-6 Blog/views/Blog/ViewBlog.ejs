@@ -1,3 +1,147 @@
 <%- include('../header') %>
 
-<%- include('../footer') %>
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">All Blogs</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- Search, Filter & Sort Controls -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="GET" action="/blog/view-blog" class="form-inline">
+                                <!-- Search -->
+                                <div class="form-group mr-3 mb-2">
+                                    <label class="mr-2">Search:</label>
+                                    <input type="text" class="form-control" name="search" placeholder="Search by title or author" value="<%= search %>">
+                                </div>
+
+                                <!-- Category Filter -->
+                                <div class="form-group mr-3 mb-2">
+                                    <label class="mr-2">Category:</label>
+                                    <select class="form-control" name="category">
+                                        <option value="">All Categories</option>
+                                        <% categories.forEach((cat) => { %>
+                                            <option value="<%= cat %>" <% if(category === cat) { %>selected<% } %>><%= cat %></option>
+                                        <% }); %>
+                                    </select>
+                                </div>
+
+                                <!-- Sort by Status -->
+                                <div class="form-group mr-3 mb-2">
+                                    <label class="mr-2">Status:</label>
+                                    <select class="form-control" name="sort">
+                                        <option value="">All Status</option>
+                                        <option value="draft" <% if(sort === 'draft') { %>selected<% } %>>Draft</option>
+                                        <option value="published" <% if(sort === 'published') { %>selected<% } %>>Published</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mb-2">Filter</button>
+                                <a href="/blog/view-blog" class="btn btn-secondary mb-2 ml-2">Reset</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blogs Grid -->
+            <!-- Row -->
+            <div class="row">
+                <% if(blogs && blogs.length> 0) { %>
+                    <% blogs.forEach((blog)=> { %>
+                        <div class="col-lg-4 col-xlg-3 col-md-5">
+                            <div class="card card-hover">
+                                <div class="box bg-cyan text-center">
+                                    <% if(blog.image) { %>
+                                        <img src="<%= blog.image %>" alt="<%= blog.title %>"
+                                            style="width: 100%; height: 200px; object-fit: cover;">
+                                    <% } %>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= blog.title %>
+                                    </h5>
+                                    <p class="card-text"><strong>Author:</strong>
+                                        <%= blog.name %>
+                                    </p>
+                                    <p class="card-text"><strong>Category:</strong>
+                                        <%= blog.category %>
+                                    </p>
+                                    <p class="card-text"><strong>Status:</strong> <span class="badge badge-info">
+                                            <%= blog.status %>
+                                        </span></p>
+                                    <p class="card-text">
+                                        <%= blog.description.substring(0, 100) %>...
+                                    </p>
+                                    <a href="/blog/view-single-blog/<%= blog._id %>" class="btn btn-primary btn-sm">View
+                                        Single Blog</a>
+                                    <a href="/blog/edit-blog/<%= blog._id %>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="/blog/delete-blog/<%= blog._id %>" class="btn btn-danger btn-sm">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="col-12">
+                        <div class="alert alert-info">No blogs found. <a href="/blog/add-blog">Add a new blog</a></div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Pagination -->
+            <% if(totalPages > 1) { %>
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous Page -->
+                                <% if(currentPage > 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/blog/view-blog?page=<%= currentPage - 1 %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">Previous</a>
+                                    </li>
+                                <% } %>
+
+                                <!-- Page Numbers -->
+                                <% for(let i = 1; i <= totalPages; i++) { %>
+                                    <li class="page-item <% if(i === currentPage) { %>active<% } %>">
+                                        <a class="page-link" href="/blog/view-blog?page=<%= i %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+
+                                <!-- Next Page -->
+                                <% if(currentPage < totalPages) { %>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/blog/view-blog?page=<%= currentPage + 1 %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">Next</a>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('../footer') %>

@@ -1,0 +1,82 @@
+<%- include('../header') %>
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title"><%= blog.title %></h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/blog/view-blog">Blogs</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><%= blog.title %></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-xlg-9 col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Blog Image -->
+                        <% if(blog.image) { %>
+                            <div class="mb-3">
+                                <img src="<%= blog.image %>" alt="<%= blog.title %>" style="width: 100%; height: auto; border-radius: 8px;">
+                            </div>
+                        <% } %>
+
+                        <!-- Blog Title -->
+                        <h2 class="card-title"><%= blog.title %></h2>
+
+                        <!-- Blog Meta Information -->
+                        <div class="mb-3">
+                            <p class="text-muted">
+                                <strong>Author:</strong> <%= blog.name %> | 
+                                <strong>Category:</strong> <span class="badge badge-primary"><%= blog.category %></span> | 
+                                <strong>Status:</strong> <span class="badge badge-info"><%= blog.status %></span>
+                            </p>
+                        </div>
+
+                        <!-- Blog Description -->
+                        <div class="mb-4">
+                            <p><%= blog.description %></p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="btn-group" role="group">
+                            <a href="/blog/view-blog" class="btn btn-secondary">Back to Blogs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4 col-xlg-3 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Blog Details</h5>
+                        <hr>
+                        <p><strong>Blog ID:</strong><br><small><%= blog._id %></small></p>
+                        <p><strong>Author:</strong><br><%= blog.name %></p>
+                        <p><strong>Category:</strong><br><span class="badge badge-primary"><%= blog.category %></span></p>
+                        <p><strong>Status:</strong><br><span class="badge badge-info"><%= blog.status %></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>

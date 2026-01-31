@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
         cb(null, 'Uploads')
     },
     filename: (req, file, cb) => {
-        cb(null, `auth-${Date.now()}${path.extname(file.originalname)}`)
+        cb(null, `blog-${Date.now()}${path.extname(file.originalname)}`)
     }
 })
 
