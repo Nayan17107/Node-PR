@@ -1,81 +1,323 @@
 <%- include('../header') %>
 
-<!-- ============================================================== -->
-<!-- Page wrapper  -->
-<!-- ============================================================== -->
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .page-wrapper {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .page-breadcrumb {
+        margin-bottom: 40px;
+        animation: slideDown 0.6s ease-out;
+    }
+
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        border-radius: 10px;
+    }
+
+    .breadcrumb-item {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .breadcrumb-item:hover,
+    .breadcrumb-item.active {
+        color: white;
+    }
+
+    .breadcrumb-item.active {
+        color: white;
+        font-weight: 600;
+    }
+
+    .blog-single-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .blog-image {
+        width: 100%;
+        height: 400px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .blog-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .blog-single-card:hover .blog-image img {
+        transform: scale(1.08);
+    }
+
+    .blog-details {
+        padding: 50px 40px;
+    }
+
+    .blog-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 20px;
+        line-height: 1.3;
+        animation: slideInLeft 0.7s ease-out;
+    }
+
+    .blog-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-bottom: 30px;
+        padding-bottom: 25px;
+        border-bottom: 2px solid #f0f0f0;
+        animation: slideInLeft 0.8s ease-out;
+        animation-delay: 0.1s;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        color: #666;
+    }
+
+    .meta-item strong {
+        color: #333;
+        font-weight: 700;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .status-draft {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status-published {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .blog-content {
+        color: #555;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 30px;
+        animation: fadeInUp 0.9s ease-out;
+        animation-delay: 0.2s;
+    }
+
+    .blog-content p {
+        margin-bottom: 15px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px solid #f0f0f0;
+        animation: fadeInUp 1s ease-out;
+        animation-delay: 0.3s;
+    }
+
+    .btn {
+        border: none;
+        border-radius: 10px;
+        padding: 12px 30px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-back {
+        background: #e0e0e0;
+        color: #333;
+    }
+
+    .btn-back:hover {
+        background: #d0d0d0;
+        transform: translateX(-5px);
+    }
+
+    .btn a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .alert {
+        border-radius: 12px;
+        border: none;
+        padding: 20px 25px;
+        animation: slideDown 0.6s ease-out;
+    }
+
+    .alert-info {
+        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        color: #667eea;
+        font-weight: 600;
+    }
+
+    .alert a {
+        color: #667eea;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .alert a:hover {
+        text-decoration: underline;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .blog-title {
+            font-size: 1.8rem;
+        }
+
+        .blog-image {
+            height: 250px;
+        }
+
+        .blog-details {
+            padding: 30px 20px;
+        }
+
+        .blog-meta {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
 <div class="page-wrapper">
-    <!-- ============================================================== -->
-    <!-- Bread crumb and right sidebar toggle -->
-    <!-- ============================================================== -->
     <div class="page-breadcrumb">
         <div class="row">
-            <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title"><%= blog.title %></h4>
-                <div class="ml-auto text-right">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/blog/view-blog">Blogs</a></li>
-                            <li class="breadcrumb-item active" aria-current="page"><%= blog.title %></li>
-                        </ol>
-                    </nav>
-                </div>
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">🏠 Home</a></li>
+                        <li class="breadcrumb-item"><a href="/blog/view-blog">📚 Blogs</a></li>
+                        <li class="breadcrumb-item active">📖 Blog Details</li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
-    <!-- Container fluid  -->
-    <!-- ============================================================== -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8 col-xlg-9 col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <!-- Blog Image -->
-                        <% if(blog.image) { %>
-                            <div class="mb-3">
-                                <img src="<%= blog.image %>" alt="<%= blog.title %>" style="width: 100%; height: auto; border-radius: 8px;">
-                            </div>
-                        <% } %>
 
-                        <!-- Blog Title -->
-                        <h2 class="card-title"><%= blog.title %></h2>
-
-                        <!-- Blog Meta Information -->
-                        <div class="mb-3">
-                            <p class="text-muted">
-                                <strong>Author:</strong> <%= blog.name %> | 
-                                <strong>Category:</strong> <span class="badge badge-primary"><%= blog.category %></span> | 
-                                <strong>Status:</strong> <span class="badge badge-info"><%= blog.status %></span>
-                            </p>
+    <div class="container">
+        <% if(blog) { %>
+            <div class="blog-single-card">
+                <div class="blog-image">
+                    <% if(blog.image) { %>
+                        <img src="<%= blog.image %>" alt="<%= blog.title %>">
+                    <% } %>
+                </div>
+                <div class="blog-details">
+                    <h1 class="blog-title"><%= blog.title %></h1>
+                    <div class="blog-meta">
+                        <div class="meta-item">
+                            <span>👤</span>
+                            <span><strong>Author:</strong> <%= blog.name %></span>
                         </div>
-
-                        <!-- Blog Description -->
-                        <div class="mb-4">
-                            <p><%= blog.description %></p>
+                        <div class="meta-item">
+                            <span>📂</span>
+                            <span><strong>Category:</strong> <%= blog.category %></span>
                         </div>
-
-                        <!-- Action Buttons -->
-                        <div class="btn-group" role="group">
-                            <a href="/blog/view-blog" class="btn btn-secondary">Back to Blogs</a>
+                        <div class="meta-item">
+                            <span>📌</span>
+                            <span><strong>Status:</strong></span>
+                            <% if(blog.status === 'draft') { %>
+                                <span class="status-badge status-draft">📝 Draft</span>
+                            <% } else { %>
+                                <span class="status-badge status-published">✅ Published</span>
+                            <% } %>
                         </div>
+                    </div>
+                    <div class="blog-content">
+                        <%- blog.description %>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-back">
+                            <a href="/blog/view-blog">← Back to Blogs</a>
+                        </button>
                     </div>
                 </div>
             </div>
-
-            <!-- Sidebar -->
-            <div class="col-lg-4 col-xlg-3 col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Blog Details</h5>
-                        <hr>
-                        <p><strong>Blog ID:</strong><br><small><%= blog._id %></small></p>
-                        <p><strong>Author:</strong><br><%= blog.name %></p>
-                        <p><strong>Category:</strong><br><span class="badge badge-primary"><%= blog.category %></span></p>
-                        <p><strong>Status:</strong><br><span class="badge badge-info"><%= blog.status %></span></p>
-                    </div>
-                </div>
+        <% } else { %>
+            <div class="alert alert-info">
+                ⚠️ Blog not found. <a href="/blog/view-blog">← Go back to all blogs</a>
             </div>
-        </div>
+        <% } %>
     </div>
 </div>
 
