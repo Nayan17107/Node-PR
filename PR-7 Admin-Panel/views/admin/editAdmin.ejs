@@ -1,0 +1,461 @@
+<%- include('../header')%>
+    <style>
+        /* ===== Edit Admin Specific Styles ===== */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --warning-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --transition-smooth: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            --border-radius: 12px;
+        }
+
+        .page-title {
+            background: var(--warning-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--warning-gradient);
+            border-radius: 2px;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+
+            to {
+                width: 60px;
+                opacity: 1;
+            }
+        }
+
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            animation: cardAppear 0.6s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-horizontal {
+            padding: 20px;
+        }
+
+        .card-title.yext-center {
+            text-align: center;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .card-title.yext-center::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--warning-gradient);
+            border-radius: 3px;
+        }
+
+        .form-group.row {
+            margin-bottom: 25px;
+            transition: var(--transition-smooth);
+        }
+
+        .form-group.row:hover {
+            transform: translateX(5px);
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 15px;
+            transition: var(--transition-smooth);
+            background-color: #fcfcfc;
+        }
+
+        .form-control:focus {
+            border-color: #fda085;
+            box-shadow: 0 0 0 0.2rem rgba(253, 160, 133, 0.25);
+            transform: translateY(-2px);
+            background-color: white;
+        }
+
+        .form-control:hover:not(:focus) {
+            border-color: #fdc6b3;
+        }
+
+        label.control-label {
+            font-weight: 600;
+            color: #495057;
+            padding-top: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .form-group.row:hover label.control-label {
+            color: #fda085;
+        }
+
+        .custom-control.custom-radio {
+            padding-left: 2rem;
+            margin-right: 20px;
+        }
+
+        .custom-control-input:checked~.custom-control-label::before {
+            background: var(--warning-gradient);
+            border-color: #fda085;
+        }
+
+        .custom-control-label {
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding-top: 2px;
+        }
+
+        .custom-control-label:hover {
+            color: #fda085;
+        }
+
+        .custom-control-input:focus~.custom-control-label::before {
+            box-shadow: 0 0 0 0.2rem rgba(253, 160, 133, 0.25);
+        }
+
+        .btn-warning {
+            background: var(--warning-gradient);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 35px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(253, 160, 133, 0.4);
+            color: white;
+        }
+
+        .btn-warning:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-warning::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .btn-warning:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(40, 40);
+                opacity: 0;
+            }
+        }
+
+        .border-top {
+            border-top: 1px solid #f0f0f0 !important;
+            padding-top: 25px;
+        }
+
+        input[type="file"] {
+            padding: 8px;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: var(--warning-gradient);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            margin-right: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(253, 160, 133, 0.3);
+        }
+
+        /* Profile image preview styling */
+        .profile-img-preview {
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 3px solid #f0f0f0;
+            transition: var(--transition-smooth);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-img-preview:hover {
+            transform: scale(1.05);
+            border-color: #fda085;
+            box-shadow: 0 8px 25px rgba(253, 160, 133, 0.2);
+        }
+
+        /* Breadcrumb styling */
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .breadcrumb-item.active {
+            color: #fda085;
+            font-weight: 500;
+        }
+
+        .breadcrumb-item a {
+            color: #6c757d;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .breadcrumb-item a:hover {
+            color: #fda085;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .form-group.row {
+                margin-bottom: 20px;
+            }
+
+            label.control-label {
+                margin-bottom: 8px;
+                padding-top: 0;
+            }
+
+            .btn-warning {
+                width: 100%;
+            }
+        }
+
+        /* Animation for form elements */
+        .form-group.row:nth-child(1) {
+            animation-delay: 0.1s;
+            animation-fill-mode: both;
+        }
+
+        .form-group.row:nth-child(2) {
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .form-group.row:nth-child(3) {
+            animation-delay: 0.3s;
+            animation-fill-mode: both;
+        }
+
+        .form-group.row:nth-child(4) {
+            animation-delay: 0.4s;
+            animation-fill-mode: both;
+        }
+
+        .form-group.row:nth-child(5) {
+            animation-delay: 0.5s;
+            animation-fill-mode: both;
+        }
+
+        .form-group.row:nth-child(6) {
+            animation-delay: 0.6s;
+            animation-fill-mode: both;
+        }
+
+        .form-group.row:nth-child(7) {
+            animation-delay: 0.7s;
+            animation-fill-mode: both;
+        }
+    </style>
+
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Update Administrator</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Update Admin</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    <div class="card">
+                        <form class="form-horizontal" action="/admin/update-admin/<%=admin.id%>" method="post"
+                            enctype="multipart/form-data">
+                            <div class="card-body">
+                                <h4 class="card-title yext-center">Update Administrator</h4>
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">First
+                                        Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" value="<%=admin.firstname%>" id="fname"
+                                            name="firstname" placeholder="First Name Here">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last
+                                        Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" value="<%=admin.lastname%>" id="lname"
+                                            name="lastname" placeholder="Last Name Here">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email"
+                                        class="col-sm-3 text-right control-label col-form-label">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" value="<%=admin.email%>" id="email"
+                                            name="email" placeholder="Email Here">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="password"
+                                        class="col-sm-3 text-right control-label col-form-label">Password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" disabled class="form-control" value="<%=admin.password%>"
+                                            id="password" name="password" placeholder="Password Here">
+                                        <small class="form-text text-muted">Password cannot be edited for security
+                                            reasons</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Gender</label>
+                                    <div class="col-md-9 d-flex">
+                                        <div class="custom-control custom-radio mx-3">
+                                            <input type="radio" class="custom-control-input" name="gender"
+                                                id="customControlValidation1" <%=admin.gender=="Male" ?"checked":""%>
+                                            value="Male" required>
+                                            <label class="custom-control-label"
+                                                for="customControlValidation1">Male</label>
+                                        </div>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" name="gender"
+                                                id="customControlValidation2" <%=admin.gender=="Female" ?"checked":""%>
+                                            value="Female" required>
+                                            <label class="custom-control-label"
+                                                for="customControlValidation2">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="contactNo"
+                                        class="col-sm-3 text-right control-label col-form-label">Contact
+                                        No</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="contactNo"
+                                            value="<%=admin.contactNo%>" name="contactNo" placeholder="Contact No Here">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="profileImage"
+                                        class="col-sm-3 text-right control-label col-form-label">Profile
+                                        Image</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" class="form-control" id="profileImage" name="profileImage">
+                                        <div class="mt-3">
+                                            <p class="mb-2">Current Image:</p>
+                                            <img src="<%=admin.profileImage%>" class="profile-img-preview" height="120"
+                                                width="120" alt="Profile Image">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top text-center">
+                                <div class="card-body ">
+                                    <button type="submit" class="btn btn-warning">Update Administrator</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <%- include('../footer')%>

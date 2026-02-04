@@ -1,0 +1,324 @@
+<%- include('../header') %>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .page-wrapper {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .container-fluid {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .page-breadcrumb {
+        margin-bottom: 30px;
+        animation: slideDown 0.6s ease-out;
+    }
+
+    .page-title {
+        color: white;
+        font-weight: 700;
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .breadcrumb {
+        background: transparent;
+        border: none;
+    }
+
+    .breadcrumb a {
+        color: rgba(255,255,255,0.8);
+        transition: all 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+        color: white;
+        text-decoration: none;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 15px 45px rgba(0,0,0,0.3);
+        background: white;
+        animation: fadeInUp 0.8s ease-out;
+        overflow: hidden;
+    }
+
+    .form-horizontal {
+        padding: 20px 0;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        animation: slideInLeft 0.6s ease-out forwards;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-group:nth-child(6) { animation-delay: 0.6s; }
+
+    .form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+    }
+
+    .form-control:focus {
+        border-color: #f5576c;
+        background: white;
+        box-shadow: 0 0 15px rgba(245, 87, 108, 0.3);
+        outline: none;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .control-label {
+        font-weight: 600;
+        color: #333;
+        font-size: 15px;
+        margin-top: 8px;
+    }
+
+    .custom-file-input {
+        display: block;
+        cursor: pointer;
+    }
+
+    .custom-file-label {
+        border: 2px dashed #f5576c;
+        border-radius: 10px;
+        padding: 30px;
+        text-align: center;
+        color: #f5576c;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        background: #fff0f3;
+    }
+
+    .custom-file-label:hover {
+        background: #ffe8ed;
+        border-color: #f093fb;
+        color: #f093fb;
+    }
+
+    .border-top {
+        border-top: 2px solid #e0e0e0 !important;
+        margin-top: 30px;
+        padding-top: 30px;
+    }
+
+    .card-body {
+        padding: 40px;
+    }
+
+    .btn {
+        border: none;
+        border-radius: 10px;
+        padding: 12px 40px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(245, 87, 108, 0.6);
+        color: white;
+    }
+
+    .btn-primary:active {
+        transform: translateY(-1px);
+    }
+
+    .img-preview {
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        animation: scaleIn 0.5s ease-out;
+    }
+
+    .img-preview:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 1.8rem;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .control-label {
+            text-align: left;
+            margin-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">✏️ Edit Blog</h4>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card">
+            <form class="form-horizontal" action="/blog/update-blog/<%= blog._id %>" enctype="multipart/form-data" method="post">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label">Author Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="name" placeholder="Author name" value="<%= blog.name %>" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label">Blog Title</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="title" placeholder="Blog Title" value="<%= blog.title %>" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label">Category</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Technology" <% if(blog.category==='Technology' ) { %>selected<% } %>>🖥️ Technology</option>
+                                <option value="Programming" <% if(blog.category==='Programming' ) { %>selected<% } %>>💻 Programming</option>
+                                <option value="Travel" <% if(blog.category==='Travel' ) { %>selected<% } %>>✈️ Travel</option>
+                                <option value="Food" <% if(blog.category==='Food' ) { %>selected<% } %>>🍽️ Food</option>
+                                <option value="Education" <% if(blog.category==='Education' ) { %>selected<% } %>>📚 Education</option>
+                                <option value="Business" <% if(blog.category==='Business' ) { %>selected<% } %>>💼 Business</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label">Status</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="status" required>
+                                <option value="">Select Status</option>
+                                <option value="Draft" <% if(blog.status==='Draft' ) { %>selected<% } %>>📝 Draft</option>
+                                <option value="Published" <% if(blog.status==='Published' ) { %>selected<% } %>>✅ Published</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label">Description</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" name="description" placeholder="Description" required><%= blog.description %></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 text-right control-label col-form-label">Image</label>
+                        <div class="col-md-9">
+                            <% if(blog.image) { %>
+                                <div class="mb-3">
+                                    <img src="<%= blog.image %>" alt="<%= blog.title %>" class="img-preview" style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px;">
+                                </div>
+                            <% } %>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="image" accept="image/*">
+                                <label class="custom-file-label">📸 Choose new image</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-top">
+                    <div class="card-body text-center">
+                        <button type="submit" class="btn btn-primary">💾 Update Blog</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>

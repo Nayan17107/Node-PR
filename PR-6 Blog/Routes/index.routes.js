@@ -6,4 +6,6 @@ routes.get('/', dashboard);
 
 routes.use('/blog', require('./blog.routes'));
 
+routes.use('/category', require('./category.routes'));
+
 module.exports = routes;
