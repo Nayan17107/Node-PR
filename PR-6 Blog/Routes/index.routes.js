@@ -8,4 +8,6 @@ routes.use('/blog', require('./blog.routes'));
 
 routes.use('/category', require('./category.routes'));
 
+routes.use('/subcategory', require('./subcategory.routes'));
+
 module.exports = routes;

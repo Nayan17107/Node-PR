@@ -1,228 +1,234 @@
 <%- include('../header') %>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    .page-wrapper {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 40px 20px;
-    }
-
-    .page-breadcrumb {
-        margin-bottom: 30px;
-        animation: slideDown 0.6s ease-out;
-    }
-
-    .page-title {
-        color: white;
-        font-weight: 700;
-        font-size: 2.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.2);
-        overflow: hidden;
-        animation: fadeInUp 0.8s ease-out;
-        transition: all 0.3s ease;
-        height: 100%;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 55px rgba(0,0,0,0.3);
-    }
-
-    .box {
-        width: 100%;
-        height: 250px;
-        overflow: hidden;
-        background: #f0f0f0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .card:hover .box img {
-        transform: scale(1.05);
-    }
-
-    .card-body {
-        padding: 25px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background: white;
-    }
-
-    .card-title {
-        font-weight: 700;
-        color: #333;
-        margin-bottom: 20px;
-        font-size: 1.3rem;
-        line-height: 1.4;
-    }
-
-    .btn {
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        font-size: 12px;
-        margin: 0 5px;
-    }
-
-    .btn-warning-sm {
-        background: #ffa726;
-        color: white;
-    }
-
-    .btn-warning-sm:hover {
-        background: #ff8a50;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(255, 167, 38, 0.4);
-    }
-
-    .btn-danger-sm {
-        background: #ef5350;
-        color: white;
-    }
-
-    .btn-danger-sm:hover {
-        background: #e53935;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(239, 83, 80, 0.4);
-    }
-
-    .btn-actions {
-        margin-top: 15px;
-        display: flex;
-        gap: 8px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .alert {
-        border-radius: 12px;
-        border: none;
-        padding: 20px 25px;
-        animation: fadeInUp 0.6s ease-out;
-        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-        color: #667eea;
-        font-weight: 600;
-    }
-
-    .alert a {
-        color: #667eea;
-        font-weight: 700;
-        text-decoration: none;
-    }
-
-    .alert a:hover {
-        text-decoration: underline;
-    }
-
-    /* Animations */
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
+        .page-wrapper {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
 
-    @media (max-width: 768px) {
+        .page-breadcrumb {
+            margin-bottom: 30px;
+            animation: slideDown 0.6s ease-out;
+        }
+
         .page-title {
-            font-size: 1.8rem;
+            color: white;
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .btn {
-            padding: 8px 15px;
-            font-size: 11px;
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.3);
+        }
+
+        .box {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .box img {
+            transform: scale(1.05);
         }
 
         .card-body {
-            padding: 15px;
+            padding: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: white;
         }
 
         .card-title {
-            font-size: 1rem;
-            margin-bottom: 12px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            line-height: 1.4;
         }
-    }
-</style>
 
-<div class="page-wrapper">
-    <div class="page-breadcrumb">
-        <div class="row">
-            <div class="col-12">
-                <h4 class="page-title">📂 All Categories</h4>
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 12px;
+            margin: 0 5px;
+        }
+
+        .btn-warning-sm {
+            background: #ffa726;
+            color: white;
+        }
+
+        .btn-warning-sm:hover {
+            background: #ff8a50;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 167, 38, 0.4);
+        }
+
+        .btn-danger-sm {
+            background: #ef5350;
+            color: white;
+        }
+
+        .btn-danger-sm:hover {
+            background: #e53935;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239, 83, 80, 0.4);
+        }
+
+        .btn-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .alert {
+            border-radius: 12px;
+            border: none;
+            padding: 20px 25px;
+            animation: fadeInUp 0.6s ease-out;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .alert a {
+            color: #667eea;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .alert a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 8px 15px;
+                font-size: 11px;
+            }
+
+            .card-body {
+                padding: 15px;
+            }
+
+            .card-title {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="page-title">📂 All Categories</h4>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid">
-        <!-- Categories Grid -->
-        <div class="row">
-            <% if(categories && categories.length > 0) { %>
-                <% categories.forEach((category) => { %>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                        <div class="card">
-                            <div class="box">
-                                <% if(category.categoryimage != "") { %>
-                                    <img src="<%= category.categoryimage %>" alt="<%= category.categoryname %>">
-                                <% } else { %>
-                                    <span style="color: #999;">No Image</span>
-                                <% } %>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title"><%= category.categoryname %></h5>
-                                <div class="btn-actions">
-                                    <a href="/category/edit-category/<%= category.id %>" class="btn btn-warning-sm">✏️ Edit</a>
-                                    <a href="/category/delete-category/<%= category.id %>" class="btn btn-danger-sm">🗑️ Delete</a>
+        <div class="container-fluid">
+            <div class="row">
+                <% if(categories && categories.length> 0) { %>
+                    <% categories.forEach((category)=> { %>
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                            <div class="card">
+                                <div class="box">
+                                    <% if(category.categoryimage !="" ) { %>
+                                        <img src="<%= category.categoryimage %>" alt="<%= category.categoryname %>">
+                                        <% } else { %>
+                                            <span style="color: #999;">No Image</span>
+                                            <% } %>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <%= category.categoryname %>
+                                    </h5>
+                                    <div class="btn-actions">
+                                        <a href="/category/edit-category/<%= category.id %>"
+                                            class="btn btn-warning-sm">✏️ Edit</a>
+                                        <a href="/category/delete-category/<%= category.id %>"
+                                            class="btn btn-danger-sm">🗑️ Delete</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <% }); %>
-            <% } else { %>
-                <div class="col-12">
-                    <div class="alert">No categories found. <a href="/category/add-category">Create your first category →</a></div>
-                </div>
-            <% } %>
+                        <% }); %>
+                            <% } else { %>
+                                <div class="col-12">
+                                    <div class="alert">No categories found. <a href="/category/add-category">Create your
+                                            first category →</a></div>
+                                </div>
+                                <% } %>
+            </div>
         </div>
     </div>
-</div>
 
-<%- include('../footer') %>
+    <%- include('../footer') %>

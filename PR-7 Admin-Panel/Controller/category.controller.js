@@ -52,35 +52,6 @@ exports.editcategory = async (req, res) => {
         res.redirect('/')
     }
 }
-
-// exports.updatecategory = async (req, res) => {
-//     let id = req.params.id;
-//     let imagepath;
-//     let category = await CategoryModel.findById(id);
-
-//     if (!category) {
-//         console.log("blog is not found");
-//         return res.redirect("/category/view-category");
-//     }
-
-//     if (req.file) {
-//         if (category.image != "") {
-//             imagepath = path.join(__dirname, "..", category.categoryimage);
-//             try {
-//                 fs.unlinkSync(imagepath);
-//                 console.log('Deleted old image:', imagepath);
-//             } catch (err) {
-//                 console.log('File Missing: ', err.message)
-//             }
-//         }
-//         imagepath = `/uploads/${req.file.filename}`
-//     } else {
-//         imagepath = category.categoryimage;
-//     }
-//     await CategoryModel.findByIdAndUpdate(id, { ...req.body, image: imagepath }, { new: true });
-//     return res.redirect("/category/view-category");
-// };
-
 exports.updatecategory = async (req, res) => {
     let id = req.params.id;
     let imagepath;
@@ -92,7 +63,7 @@ exports.updatecategory = async (req, res) => {
     }
 
     if (req.file && req.file.filename) {
-        
+
         if (category.categoryimage) {
             const oldPath = path.join(__dirname, "..", category.categoryimage);
             try {
@@ -145,4 +116,3 @@ exports.detetecategory = async (req, res) => {
         res.redirect('/')
     }
 }
-
