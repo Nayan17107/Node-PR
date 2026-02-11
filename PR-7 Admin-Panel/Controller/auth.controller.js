@@ -36,12 +36,9 @@ exports.logOut = async (req, res) => {
     }
 }
 
-
 exports.profilePage = (req, res) => {
     res.render('profile')
 }
-
-
 
 exports.changepasswordpage = async (req, res) => {
     try {
@@ -86,8 +83,6 @@ exports.changepassword = async (req, res) => {
     }
 }
 
-
-
 exports.sentopt = async (req, res) => {
     try {
         let admin = await adminModel.findOne({ email: req.body.email })
@@ -95,7 +90,6 @@ exports.sentopt = async (req, res) => {
             req.flash('error', 'Enter Valid Email')
             res.redirect('/user/login')
         }
-
 
         let otp = otpgenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false })
         req.session.forgetpassword = {

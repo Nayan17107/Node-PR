@@ -190,7 +190,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="page-title">📂 All  Sub Categories</h4>
+                    <h4 class="page-title">📂 All Sub Categories</h4>
                 </div>
             </div>
         </div>
@@ -202,8 +202,13 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">
+                                        <%= subcategory.categoryid.categoryname %>
+                                    </h5>
+                                    <h5 class="card-title">
                                         <%= subcategory.subcategoryname %>
                                     </h5>
+                                    <img src="<%= subcategory.categoryid.categoryimage %>" alt="categoryImage" width="80"
+                                        height="80" />
                                     <div class="btn-actions">
                                         <a href="/subcategory/edit-subcategory/<%= subcategory.id %>"
                                             class="btn btn-warning-sm">✏️ Edit</a>
@@ -216,10 +221,11 @@
                         <% }); %>
                             <% } else { %>
                                 <div class="col-12">
-                                    <div class="alert">No subcategories found. <a href="/subcategory/add-subcategory">Create your
+                                    <div class="alert">No subcategories found. <a
+                                            href="/subcategory/add-subcategory">Create your
                                             first Subcategory →</a></div>
                                 </div>
-                            <% } %>
+                                <% } %>
             </div>
         </div>
     </div>

@@ -5,11 +5,11 @@ const routes = express.Router()
 
 routes.get('/', passport.checkAuthentication, dashboard);
 
-routes.use('/blog', require('./blog.routes'));
+routes.use('/blog',passport.checkAuthentication,  require('./blog.routes'));
 
-routes.use('/category', require('./category.routes'));
+routes.use('/category',passport.checkAuthentication,  require('./category.routes'));
 
-routes.use('/subcategory', require('./subcategory.routes'));
+routes.use('/subcategory',passport.checkAuthentication,  require('./subcategory.routes'));
 
 routes.use('/admin', passport.checkAuthentication, require('./admin.routes'))
 
