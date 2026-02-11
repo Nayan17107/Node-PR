@@ -19,6 +19,7 @@ exports.addsubcategory = async (req, res) => {
         await SubCategoryModel.create({
             ...req.body
         })
+        req.flash('success', "SubCategory Added!!!!")
         res.redirect('/subcategory/add-subcategory');
     } catch (error) {
         console.log(error)
@@ -49,6 +50,7 @@ exports.deletesubcategory = async (req, res) => {
         }
 
         await SubCategoryModel.findByIdAndDelete(id);
+        req.flash('success', "SubCategory Deleted!!!!")
         return res.redirect('/subcategory/view-subcategory');
     } catch (error) {
         console.log(error)
@@ -82,7 +84,7 @@ exports.updateSubCategory = async (req, res) => {
         );
 
         // console.log(subcategory)
-        req.flash('success', "Category Update!!!!")
+        req.flash('success', "SubCategory Updated!!!!")
         res.redirect('/subcategory/view-subcategory')
     } catch (error) {
         console.log(error)

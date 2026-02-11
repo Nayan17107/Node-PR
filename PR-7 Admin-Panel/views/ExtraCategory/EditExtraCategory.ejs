@@ -211,17 +211,17 @@
         </div>
         <div class="container-fluid">
             <div class="card">
-                <form class="form-horizontal" action="/subcategory/update-subcategory/<%= subcategory.id %>" method="post">
+                <form class="form-horizontal" action="/extracategory/update-extracategory/<%= extracategory.id %>" method="post">
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="control-label">Enter Sub Category</label>
-                            <input type="text" class="form-control" name="subcategoryname"
-                                placeholder="Enter Sub Category name" value="<%= subcategory.subcategoryname %>" required>
+                            <label class="control-label">Enter Extra Category</label>
+                            <input type="text" class="form-control" name="extracategoryname"
+                                placeholder="Enter Extra Category name" value="<%= extracategory.extracategoryname %>" required>
                         </div>
                     </div>
                     <div class="border-top">
                         <div class="card-body text-center">
-                            <button type="submit" class="btn">Update Sub Category</button>
+                            <button type="submit" class="btn">Update Extra Category</button>
                         </div>
                     </div>
                 </form>

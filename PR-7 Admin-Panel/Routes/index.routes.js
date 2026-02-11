@@ -11,6 +11,8 @@ routes.use('/category',passport.checkAuthentication,  require('./category.routes
 
 routes.use('/subcategory',passport.checkAuthentication,  require('./subcategory.routes'));
 
+routes.use('/extracategory',passport.checkAuthentication,  require('./extracategory.routes'));
+
 routes.use('/admin', passport.checkAuthentication, require('./admin.routes'))
 
 routes.use('/user', require('./auth.routes'))

@@ -36,11 +36,11 @@
         font-size: 0.95rem;
     }
 
-    .subcategory-grid {
+    .extra-grid {
         row-gap: 24px;
     }
 
-    .sub-card {
+    .extra-card {
         height: 100%;
         border: 1px solid #e3eaf9;
         border-radius: 16px;
@@ -51,12 +51,12 @@
         animation: fadeUp 0.5s ease-out;
     }
 
-    .sub-card:hover {
+    .extra-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 14px 36px rgba(37, 76, 171, 0.16);
     }
 
-    .sub-card .thumb {
+    .extra-card .thumb {
         width: 100%;
         height: 170px;
         background: #f2f6ff;
@@ -66,13 +66,13 @@
         overflow: hidden;
     }
 
-    .sub-card .thumb img {
+    .extra-card .thumb img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 
-    .sub-card .card-body {
+    .extra-card .card-body {
         padding: 18px 18px 16px;
         display: flex;
         flex-direction: column;
@@ -216,11 +216,11 @@
             font-size: 0.9rem;
         }
 
-        .sub-card .thumb {
+        .extra-card .thumb {
             height: 155px;
         }
 
-        .sub-card .card-body {
+        .extra-card .card-body {
             height: calc(100% - 155px);
         }
     }
@@ -229,33 +229,37 @@
 <div class="page-wrapper">
     <div class="container-fluid">
         <div class="page-breadcrumb">
-            <h4 class="page-title">All Sub Categories</h4>
-            <p class="subtitle">Manage sub category records from one place.</p>
+            <h4 class="page-title">All Extra Categories</h4>
+            <p class="subtitle">Manage extra category records from one place.</p>
         </div>
 
-        <div class="row subcategory-grid">
-            <% if (subcategories && subcategories.length > 0) { %>
-                <% subcategories.forEach((subcategory) => { %>
+        <div class="row extra-grid">
+            <% if (extracategories && extracategories.length > 0) { %>
+                <% extracategories.forEach((extracategory) => { %>
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                        <div class="sub-card">
+                        <div class="extra-card">
                             <div class="thumb">
-                                <img src="<%= subcategory.categoryid.categoryimage %>" alt="category image">
+                                <img src="<%= extracategory.categoryid.categoryimage %>" alt="category image">
                             </div>
                             <div class="card-body">
                                 <div class="card-meta">
                                     <div class="meta-item">
                                         <span class="meta-label">Category</span>
-                                        <div class="meta-value"><%= subcategory.categoryid.categoryname %></div>
+                                        <div class="meta-value"><%= extracategory.categoryid.categoryname %></div>
                                     </div>
                                     <div class="meta-item">
                                         <span class="meta-label">Sub Category</span>
-                                        <div class="meta-value"><%= subcategory.subcategoryname %></div>
+                                        <div class="meta-value"><%= extracategory.subcategoryid.subcategoryname %></div>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="meta-label">Extra Category</span>
+                                        <div class="meta-value"><%= extracategory.extracategoryname %></div>
                                     </div>
                                 </div>
 
                                 <div class="btn-actions">
-                                    <a href="/subcategory/edit-subcategory/<%= subcategory.id %>" class="btn btn-edit">Edit</a>
-                                    <a href="/subcategory/delete-subcategory/<%= subcategory.id %>" class="btn btn-delete">Delete</a>
+                                    <a href="/extracategory/edit-extracategory/<%= extracategory.id %>" class="btn btn-edit">Edit</a>
+                                    <a href="/extracategory/delete-extracategory/<%= extracategory.id %>" class="btn btn-delete">Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -264,8 +268,8 @@
             <% } else { %>
                 <div class="col-12">
                     <div class="empty-state">
-                        <p>No sub categories found.</p>
-                        <a href="/subcategory/add-subcategory">Create your first sub category</a>
+                        <p>No extra categories found.</p>
+                        <a href="/extracategory/add-extracategory">Create your first extra category</a>
                     </div>
                 </div>
             <% } %>

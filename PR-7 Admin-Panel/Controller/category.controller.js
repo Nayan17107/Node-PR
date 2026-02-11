@@ -23,6 +23,7 @@ exports.addcategory = async (req, res) => {
             ...req.body,
             categoryimage: imagepath
         })
+        req.flash('success', "Category Added!!!!")
         res.redirect('/category/add-category');
     } catch (error) {
         console.log(error)
@@ -52,6 +53,7 @@ exports.editcategory = async (req, res) => {
         res.redirect('/')
     }
 }
+
 exports.updatecategory = async (req, res) => {
     let id = req.params.id;
     let imagepath;
@@ -85,7 +87,8 @@ exports.updatecategory = async (req, res) => {
         { ...req.body, categoryimage: imagepath },
         { new: true }
     );
-
+    
+    req.flash('success', "Category Updated!!!!")
     return res.redirect("/category/view-category");
 };
 
@@ -110,6 +113,7 @@ exports.detetecategory = async (req, res) => {
             }
         }
         await CategoryModel.findByIdAndDelete(id);
+        req.flash('warning', "Category Deleted!!!!")
         return res.redirect('/category/view-category');
     } catch (error) {
         console.log(error)

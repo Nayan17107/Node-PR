@@ -1,234 +1,275 @@
 <%- include('../header') %>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .page-wrapper {
+        min-height: 100vh;
+        padding: 36px 20px;
+        background: linear-gradient(145deg, #eef3ff 0%, #f8fbff 45%, #ffffff 100%);
+    }
+
+    .container-fluid {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    .page-breadcrumb {
+        margin-bottom: 28px;
+        animation: slideDown 0.45s ease-out;
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1f2a56;
+        letter-spacing: 0.3px;
+    }
+
+    .subtitle {
+        margin-top: 6px;
+        color: #52608e;
+        font-size: 0.95rem;
+    }
+
+    .category-grid {
+        row-gap: 24px;
+    }
+
+    .category-card {
+        height: 100%;
+        border: 1px solid #e3eaf9;
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(37, 76, 171, 0.08);
+        overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        animation: fadeUp 0.5s ease-out;
+    }
+
+    .category-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 36px rgba(37, 76, 171, 0.16);
+    }
+
+    .category-card .thumb {
+        width: 100%;
+        height: 170px;
+        background: #f2f6ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .category-card .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .no-image {
+        font-size: 14px;
+        color: #6a78a8;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+    }
+
+    .category-card .card-body {
+        padding: 18px 18px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: calc(100% - 170px);
+        gap: 14px;
+    }
+
+    .meta-item {
+        background: #f7f9ff;
+        border: 1px solid #e7edff;
+        border-radius: 10px;
+        padding: 10px 12px;
+    }
+
+    .meta-label {
+        display: block;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        color: #6474ad;
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+
+    .meta-value {
+        font-size: 15px;
+        font-weight: 600;
+        color: #1f2a56;
+        line-height: 1.35;
+        word-break: break-word;
+    }
+
+    .btn-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn-actions .btn {
+        flex: 1;
+        border-radius: 9px;
+        font-weight: 600;
+        font-size: 13px;
+        padding: 9px 10px;
+        border: 0;
+        transition: all 0.2s ease;
+    }
+
+    .btn-edit {
+        background: #ffb648;
+        color: #232323;
+    }
+
+    .btn-edit:hover {
+        background: #ffa92a;
+        color: #232323;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .btn-delete {
+        background: #f05d5e;
+        color: #ffffff;
+    }
+
+    .btn-delete:hover {
+        background: #e54849;
+        color: #ffffff;
+        text-decoration: none;
+        transform: translateY(-1px);
+    }
+
+    .empty-state {
+        border: 1px dashed #cdd9fb;
+        border-radius: 14px;
+        background: #f8faff;
+        padding: 26px;
+        text-align: center;
+        color: #4b5f96;
+        animation: fadeUp 0.5s ease-out;
+    }
+
+    .empty-state p {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .empty-state a {
+        display: inline-block;
+        margin-top: 10px;
+        font-weight: 700;
+        color: #2f56c7;
+        text-decoration: none;
+    }
+
+    .empty-state a:hover {
+        text-decoration: underline;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-14px);
         }
 
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 767px) {
         .page-wrapper {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
-
-        .page-breadcrumb {
-            margin-bottom: 30px;
-            animation: slideDown 0.6s ease-out;
+            padding: 28px 14px;
         }
 
         .page-title {
-            color: white;
-            font-weight: 700;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 1.6rem;
         }
 
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            animation: fadeInUp 0.8s ease-out;
-            transition: all 0.3s ease;
-            height: 100%;
+        .subtitle {
+            font-size: 0.9rem;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.3);
+        .category-card .thumb {
+            height: 155px;
         }
 
-        .box {
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .category-card .card-body {
+            height: calc(100% - 155px);
         }
+    }
+</style>
 
-        .box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover .box img {
-            transform: scale(1.05);
-        }
-
-        .card-body {
-            padding: 25px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: white;
-        }
-
-        .card-title {
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            line-height: 1.4;
-        }
-
-        .btn {
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            font-size: 12px;
-            margin: 0 5px;
-        }
-
-        .btn-warning-sm {
-            background: #ffa726;
-            color: white;
-        }
-
-        .btn-warning-sm:hover {
-            background: #ff8a50;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 167, 38, 0.4);
-        }
-
-        .btn-danger-sm {
-            background: #ef5350;
-            color: white;
-        }
-
-        .btn-danger-sm:hover {
-            background: #e53935;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(239, 83, 80, 0.4);
-        }
-
-        .btn-actions {
-            margin-top: 15px;
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .alert {
-            border-radius: 12px;
-            border: none;
-            padding: 20px 25px;
-            animation: fadeInUp 0.6s ease-out;
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .alert a {
-            color: #667eea;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .alert a:hover {
-            text-decoration: underline;
-        }
-
-        /* Animations */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-title {
-                font-size: 1.8rem;
-            }
-
-            .btn {
-                padding: 8px 15px;
-                font-size: 11px;
-            }
-
-            .card-body {
-                padding: 15px;
-            }
-
-            .card-title {
-                font-size: 1rem;
-                margin-bottom: 12px;
-            }
-        }
-    </style>
-
-    <div class="page-wrapper">
+<div class="page-wrapper">
+    <div class="container-fluid">
         <div class="page-breadcrumb">
-            <div class="row">
-                <div class="col-12">
-                    <h4 class="page-title">📂 All Categories</h4>
-                </div>
-            </div>
+            <h4 class="page-title">All Categories</h4>
+            <p class="subtitle">Manage category records from one place.</p>
         </div>
-        <div class="container-fluid">
-            <div class="row">
-                <% if(categories && categories.length> 0) { %>
-                    <% categories.forEach((category)=> { %>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                            <div class="card">
-                                <div class="box">
-                                    <% if(category.categoryimage !="" ) { %>
-                                        <img src="<%= category.categoryimage %>" alt="<%= category.categoryname %>">
-                                        <% } else { %>
-                                            <span style="color: #999;">No Image</span>
-                                            <% } %>
+
+        <div class="row category-grid">
+            <% if (categories && categories.length > 0) { %>
+                <% categories.forEach((category) => { %>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                        <div class="category-card">
+                            <div class="thumb">
+                                <% if (category.categoryimage && category.categoryimage !== "") { %>
+                                    <img src="<%= category.categoryimage %>" alt="<%= category.categoryname %>">
+                                <% } else { %>
+                                    <span class="no-image">No Image</span>
+                                <% } %>
+                            </div>
+                            <div class="card-body">
+                                <div class="meta-item">
+                                    <span class="meta-label">Category</span>
+                                    <div class="meta-value"><%= category.categoryname %></div>
                                 </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <%= category.categoryname %>
-                                    </h5>
-                                    <div class="btn-actions">
-                                        <a href="/category/edit-category/<%= category.id %>"
-                                            class="btn btn-warning-sm">✏️ Edit</a>
-                                        <a href="/category/delete-category/<%= category.id %>"
-                                            class="btn btn-danger-sm">🗑️ Delete</a>
-                                    </div>
+
+                                <div class="btn-actions">
+                                    <a href="/category/edit-category/<%= category.id %>" class="btn btn-edit">Edit</a>
+                                    <a href="/category/delete-category/<%= category.id %>" class="btn btn-delete">Delete</a>
                                 </div>
                             </div>
                         </div>
-                        <% }); %>
-                            <% } else { %>
-                                <div class="col-12">
-                                    <div class="alert">No categories found. <a href="/category/add-category">Create your
-                                            first category →</a></div>
-                                </div>
-                                <% } %>
-            </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-12">
+                    <div class="empty-state">
+                        <p>No categories found.</p>
+                        <a href="/category/add-category">Create your first category</a>
+                    </div>
+                </div>
+            <% } %>
         </div>
     </div>
+</div>
 
-    <%- include('../footer') %>
+<%- include('../footer') %>
