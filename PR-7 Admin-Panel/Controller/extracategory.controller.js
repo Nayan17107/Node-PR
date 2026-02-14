@@ -3,7 +3,6 @@ const CategoryModel = require('../Model/category.model');
 const ExtracategoryModel = require('../Model/extracategory.model');
 const path = require('path');
 const fs = require('fs');
-const extracategoryModel = require('../Model/extracategory.model');
 
 exports.addextracategorypage = async (req, res) => {
     try {

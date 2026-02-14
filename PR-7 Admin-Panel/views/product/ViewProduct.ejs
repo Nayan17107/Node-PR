@@ -1,0 +1,257 @@
+<%- include('../header') %>
+
+<style>
+    :root {
+        --bg-main: linear-gradient(135deg, #f7f9fc 0%, #eef3ff 100%);
+        --card-bg: #ffffff;
+        --title-grad: linear-gradient(135deg, #0f4c81 0%, #3b82f6 100%);
+        --text-main: #1f2937;
+        --text-soft: #6b7280;
+        --border-soft: #e5e7eb;
+        --shadow-soft: 0 10px 28px rgba(15, 76, 129, 0.12);
+        --shadow-hover: 0 20px 40px rgba(59, 130, 246, 0.2);
+    }
+
+    .page-wrapper {
+        min-height: 100vh;
+        background: var(--bg-main);
+    }
+
+    .page-title {
+        font-size: 2rem;
+        font-weight: 800;
+        background: var(--title-grad);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .sub-title {
+        color: var(--text-soft);
+        font-weight: 500;
+        margin-top: 6px;
+    }
+
+    .product-grid {
+        margin-top: 20px;
+    }
+
+    .product-card {
+        border: 1px solid var(--border-soft);
+        border-radius: 14px;
+        overflow: hidden;
+        background: var(--card-bg);
+        box-shadow: var(--shadow-soft);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 210px;
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .no-image {
+        color: #1e3a8a;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+    }
+
+    .product-body {
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .product-name {
+        color: var(--text-main);
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        line-height: 1.35;
+        min-height: 44px;
+    }
+
+    .meta-line {
+        color: var(--text-soft);
+        font-size: 0.9rem;
+        margin-bottom: 7px;
+    }
+
+    .meta-line strong {
+        color: #334155;
+        font-weight: 700;
+    }
+
+    .price-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 12px 0 8px;
+        flex-wrap: wrap;
+    }
+
+    .price-main {
+        color: #065f46;
+        font-size: 1.1rem;
+        font-weight: 800;
+    }
+
+    .price-discount {
+        color: #b91c1c;
+        font-size: 0.9rem;
+        font-weight: 700;
+        background: #fee2e2;
+        border-radius: 50px;
+        padding: 3px 10px;
+    }
+
+    .product-actions {
+        margin-top: auto;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .btn-card {
+        border: none;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-card:hover {
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+
+    .btn-view {
+        color: #fff;
+        background: #2563eb;
+    }
+
+    .btn-edit {
+        color: #fff;
+        background: #f59e0b;
+    }
+
+    .btn-delete {
+        color: #fff;
+        background: #ef4444;
+    }
+
+    .empty-state {
+        border: 1px dashed #c7d2fe;
+        background: #eef2ff;
+        border-radius: 14px;
+        padding: 28px;
+        text-align: center;
+        color: #3730a3;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 1.5rem;
+        }
+
+        .product-image {
+            height: 190px;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <div>
+                    <h4 class="page-title">All Products</h4>
+                    <p class="sub-title">Card view for all products from your product model.</p>
+                </div>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">View Product</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row product-grid">
+            <% if (products && products.length > 0) { %>
+                <% products.forEach((product) => { %>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <% if (product.image) { %>
+                                    <img src="<%= product.image %>" alt="<%= product.productname %>">
+                                <% } else { %>
+                                    <span class="no-image">NO IMAGE</span>
+                                <% } %>
+                            </div>
+
+                            <div class="product-body">
+                                <h5 class="product-name"><%= product.productname %></h5>
+
+                                <p class="meta-line"><strong>Category:</strong> <%= product.categoryid && product.categoryid.categoryname ? product.categoryid.categoryname : '-' %></p>
+                                <p class="meta-line"><strong>Sub Category:</strong> <%= product.subcategoryid && product.subcategoryid.subcategoryname ? product.subcategoryid.subcategoryname : '-' %></p>
+                                <p class="meta-line"><strong>Extra Category:</strong> <%= product.extracategoryid && product.extracategoryid.extracategoryname ? product.extracategoryid.extracategoryname : '-' %></p>
+                                <p class="meta-line"><strong>Stock:</strong> <%= product.stock %> | <strong>Rating:</strong> <%= product.rating %></p>
+
+                                <div class="price-row">
+                                    <span class="price-main">Rs. <%= product.price %></span>
+                                    <% if (product.discountprice && product.discountprice > 0) { %>
+                                        <span class="price-discount">Discount Rs. <%= product.discountprice %></span>
+                                    <% } %>
+                                </div>
+
+                                <div class="product-actions">
+                                    <a href="javascript:void(0)" class="btn-card btn-view">View Product</a>
+                                    <a href="javascript:void(0)" class="btn-card btn-edit">Edit</a>
+                                    <a href="javascript:void(0)" class="btn-card btn-delete">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-12">
+                    <div class="empty-state">
+                        No products found. Add a product to see cards here.
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('../footer') %>

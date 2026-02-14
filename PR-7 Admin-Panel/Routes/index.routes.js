@@ -13,6 +13,8 @@ routes.use('/subcategory',passport.checkAuthentication,  require('./subcategory.
 
 routes.use('/extracategory',passport.checkAuthentication,  require('./extracategory.routes'));
 
+routes.use('/product',passport.checkAuthentication,  require('./product.routes'));
+
 routes.use('/admin', passport.checkAuthentication, require('./admin.routes'))
 
 routes.use('/user', require('./auth.routes'))
