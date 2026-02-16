@@ -68,12 +68,80 @@ exports.addproduct = async (req, res) => {
 
 exports.viewproduct = async (req, res) => {
     try {
+        let { search = '', categoryid = '', subcategoryid = '', extracategoryid = '', sort = '' } = req.query;
+
+        search = String(search || '').trim();
+        categoryid = String(categoryid || '').trim();
+        subcategoryid = String(subcategoryid || '').trim();
+        extracategoryid = String(extracategoryid || '').trim();
+        sort = String(sort || '').trim();
+
+        if (categoryid.toLowerCase() === 'all') categoryid = '';
+        if (subcategoryid.toLowerCase() === 'all') subcategoryid = '';
+        if (extracategoryid.toLowerCase() === 'all') extracategoryid = '';
+
+        // Load all products first, then apply filters in-memory for safer matching.
         let products = await ProductModel.find()
             .populate('categoryid', 'categoryname')
             .populate('subcategoryid', 'subcategoryname')
             .populate('extracategoryid', 'extracategoryname');
 
-        res.render('product/ViewProduct', { products })
+        if (search) {
+            const q = search.toLowerCase();
+            products = products.filter((p) => String(p.productname || '').toLowerCase().includes(q));
+        }
+
+        // Individual filter priority: ExtraCategory > SubCategory > Category
+        if (extracategoryid) {
+            products = products.filter((p) => {
+                const id = p.extracategoryid && p.extracategoryid._id ? p.extracategoryid._id : p.extracategoryid;
+                return String(id || '') === extracategoryid;
+            });
+        } else if (subcategoryid) {
+            products = products.filter((p) => {
+                const id = p.subcategoryid && p.subcategoryid._id ? p.subcategoryid._id : p.subcategoryid;
+                return String(id || '') === subcategoryid;
+            });
+        } else if (categoryid) {
+            products = products.filter((p) => {
+                const id = p.categoryid && p.categoryid._id ? p.categoryid._id : p.categoryid;
+                return String(id || '') === categoryid;
+            });
+        }
+
+        const textCompare = (a, b) => String(a || '').localeCompare(String(b || ''), 'en', { sensitivity: 'base' });
+
+        switch (sort) {
+            case 'category_az':
+                products.sort((a, b) => textCompare(a.categoryid && a.categoryid.categoryname, b.categoryid && b.categoryid.categoryname));
+                break;
+            case 'subcategory_az':
+                products.sort((a, b) => textCompare(a.subcategoryid && a.subcategoryid.subcategoryname, b.subcategoryid && b.subcategoryid.subcategoryname));
+                break;
+            case 'extracategory_az':
+                products.sort((a, b) => textCompare(a.extracategoryid && a.extracategoryid.extracategoryname, b.extracategoryid && b.extracategoryid.extracategoryname));
+                break;
+            case 'rating_high':
+                products.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+                break;
+            case 'rating_low':
+                products.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+                break;
+            default:
+                break;
+        }
+
+        let categories = await CategoryModel.find().sort({ categoryname: 1 });
+        let subcategories = await SubCategoryModel.find().sort({ subcategoryname: 1 });
+        let extracategories = await ExtracategoryModel.find().sort({ extracategoryname: 1 });
+
+        res.render('product/ViewProduct', {
+            products,
+            categories,
+            subcategories,
+            extracategories,
+            filters: { search, categoryid, subcategoryid, extracategoryid, sort }
+        })
     } catch (error) {
         console.log(error)
         res.redirect('/')
@@ -224,4 +292,9 @@ exports.viewsingleproduct = async (req, res) => {
         res.redirect('/')
     }
 }
+
+
+
+
+
 
