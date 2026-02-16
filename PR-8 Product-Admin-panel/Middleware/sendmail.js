@@ -13,7 +13,7 @@ const transport = nodemailer.createTransport({
 
 const sendMail = async (message) => {
     let respons = await transport.sendMail(message)
-    console.log(respons)
+    // console.log(respons)
 }
 
 module.exports = sendMail;
