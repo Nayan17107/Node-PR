@@ -1,202 +1,98 @@
 <%- include('../header') %>
-
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0f4c81 0%, #3b82f6 100%);
+            --surface: #ffffff;
+            --border-soft: #e5e7eb;
+            --text-main: #1f2937;
+            --shadow: 0 12px 34px rgba(15, 76, 129, 0.12);
         }
 
         .page-wrapper {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
-        }
-
-        .container-fluid {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .page-breadcrumb {
-            margin-bottom: 30px;
-            animation: slideDown 0.6s ease-out;
+            background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
         }
 
         .page-title {
-            color: white;
-            font-weight: 700;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
-            background: white;
-            animation: fadeInUp 0.8s ease-out;
+        .layout-card {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
             overflow: hidden;
         }
 
         .form-horizontal {
-            padding: 0;
+            padding: 24px 20px;
         }
 
-        .form-group {
-            margin-bottom: 25px;
-            display: flex;
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .form-group.row {
+            margin-bottom: 20px;
             align-items: center;
-            animation: slideInLeft 0.6s ease-out forwards;
-        }
-
-        .form-group:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .form-group:nth-child(2) {
-            animation-delay: 0.2s;
         }
 
         .form-control {
-            border: 2px solid #e0e0e0;
+            border: 2px solid var(--border-soft);
             border-radius: 10px;
-            padding: 12px 18px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
-            width: 100%;
-            height: 50px;
+            height: 46px;
+            padding: 10px 14px;
+            color: var(--text-main);
+            background: #fcfdff;
+            transition: 0.25s ease;
         }
 
         .form-control:focus {
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
-            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.18);
+            background: #fff;
         }
 
-        select.form-control {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 15px;
-            padding-right: 40px;
-            height: 50px !important;
+        label.control-label {
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 0;
         }
 
-        .control-label {
-            font-weight: 600;
-            color: #333;
-            font-size: 15px;
-            min-width: 180px;
-            text-align: right;
-            padding-right: 20px;
-            margin: 0;
+        .submit-wrap {
+            border-top: 1px solid var(--border-soft);
+            padding-top: 20px;
         }
 
-        .border-top {
-            border-top: 2px solid #e0e0e0 !important;
-            margin-top: 30px;
-            padding-top: 30px;
-        }
-
-        .card-body {
-            padding: 40px;
-        }
-
-        .btn {
+        .btn-primary {
             border: none;
             border-radius: 10px;
-            padding: 12px 40px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            padding: 11px 30px;
+            font-weight: 700;
+            letter-spacing: .2px;
+            background: var(--primary-gradient);
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
-            color: white;
-            text-decoration: none;
-        }
-
-        .btn:active {
+        .btn-primary:hover {
             transform: translateY(-1px);
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* Animations */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
         }
 
         @media (max-width: 768px) {
-            .page-title {
-                font-size: 1.8rem;
-            }
-
-            .card-body {
-                padding: 25px;
-            }
-
-            .form-group {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .control-label {
-                min-width: 100%;
-                text-align: left;
-                padding-right: 0;
-                margin-bottom: 8px;
-            }
-
-            .form-control {
+            .btn-primary {
                 width: 100%;
+            }
+
+            label.control-label {
+                margin-bottom: 8px;
             }
         }
     </style>
@@ -206,68 +102,93 @@
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
                     <h4 class="page-title">Add Extra Category</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Add Extra Category</li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="container-fluid">
-            <div class="card">
-                <form class="form-horizontal" action="/extracategory/add-extracategory" method="post">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label class="control-label">Select Category</label>
-                            <select class="form-control" name="categoryid" id="categoryid">
-                                <option value="">Select Category</option>
-                                <% category.forEach((cate)=> { %>
-                                    <option value="<%= cate.id %>">
-                                        <%= cate.categoryname %>
-                                    </option>
-                                    <% }) %>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Select SubCategory</label>
-                            <select class="form-control" name="subcategoryid" id="subcategoryid">
-                                <option value="">Select Sub Category</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Enter Extra Category</label>
-                            <input type="text" class="form-control" name="extracategoryname"
-                                placeholder="Enter Extra Category name" required>
-                        </div>
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8">
+                    <div class="layout-card">
+                        <form class="form-horizontal" action="/extracategory/add-extracategory" method="post">
+                            <div class="card-body">
+                                <h4 class="section-title">Extra Category Details</h4>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="categoryid" id="categoryid">
+                                            <option value="">Select category</option>
+                                            <% category.forEach((cate)=> { %>
+                                                <option value="<%= cate.id %>">
+                                                    <%= cate.categoryname %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Sub Category</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="subcategoryid" id="subcategoryid">
+                                            <option value="">Select sub category</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Extra Category
+                                        Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="extracategoryname"
+                                            placeholder="Enter extra category name" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="submit-wrap text-center">
+                                <div class="card-body pt-0">
+                                    <button type="submit" class="btn btn-primary">Add Extra Category</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="border-top">
-                        <div class="card-body text-center">
-                            <button type="submit" class="btn">Add Extra Category</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
+    <script>
+        let Category = document.getElementById('categoryid');
+        let SubCategory = document.getElementById('subcategoryid');
+
+        Category.addEventListener('change', () => {
+            SubCategory.innerHTML = "<option value=''>Select Sub Category</option>";
+
+            let CategoryValue = Category.value;
+            if (!CategoryValue) return;
+
+            fetch(`/extracategory/subcategory/${CategoryValue}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.subCategories.forEach(subCat => {
+                        let option = document.createElement('option');
+                        option.textContent = subCat.subcategoryname;
+                        option.value = subCat._id;
+                        SubCategory.appendChild(option);
+                    });
+                })
+                .catch(err => console.log(err));
+        });
+    </script>
+
     <%- include('../footer') %>
-
-        <script>
-            let Category = document.getElementById('categoryid');
-            let SubCategory = document.getElementById('subcategoryid');
-
-            Category.addEventListener('change', () => {
-                SubCategory.innerHTML = "<option value=''>Select Sub Category</option>";
-
-                let CategoryValue = Category.value;
-                if (!CategoryValue) return;
-
-                fetch(`/extracategory/subcategory/${CategoryValue}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.subCategories.forEach(subCat => {
-                            let option = document.createElement('option');
-                            option.textContent = subCat.subcategoryname; 
-                            option.value = subCat._id;
-                            SubCategory.appendChild(option);
-                        });
-                    })
-                    .catch(err => console.log(err));
-            });
-        </script>

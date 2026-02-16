@@ -1,294 +1,120 @@
 <%- include('../header') %>
-
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    :root {
+        --primary-gradient: linear-gradient(135deg, #0f4c81 0%, #3b82f6 100%);
+        --surface: #ffffff;
+        --border-soft: #e5e7eb;
+        --text-main: #1f2937;
+        --text-soft: #6b7280;
+        --shadow: 0 12px 34px rgba(15, 76, 129, 0.12);
     }
 
-    .page-wrapper {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 40px 20px;
-    }
-
-    .container-fluid {
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-    .page-breadcrumb {
-        margin-bottom: 30px;
-        animation: slideDown 0.6s ease-out;
-    }
-
-    .page-title {
-        color: white;
-        font-weight: 700;
-        font-size: 2.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .breadcrumb {
-        background: transparent;
-        border: none;
-    }
-
-    .breadcrumb a {
-        color: rgba(255,255,255,0.8);
-        transition: all 0.3s ease;
-    }
-
-    .breadcrumb a:hover {
-        color: white;
-        text-decoration: none;
-    }
-
-    .card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.3);
-        background: white;
-        animation: fadeInUp 0.8s ease-out;
-        overflow: hidden;
-    }
-
-    .form-horizontal {
-        padding: 20px 0;
-    }
-
-    .form-group {
-        margin-bottom: 25px;
-        animation: slideInLeft 0.6s ease-out forwards;
-    }
-
-    .form-group:nth-child(1) { animation-delay: 0.1s; }
-    .form-group:nth-child(2) { animation-delay: 0.2s; }
-    .form-group:nth-child(3) { animation-delay: 0.3s; }
-    .form-group:nth-child(4) { animation-delay: 0.4s; }
-    .form-group:nth-child(5) { animation-delay: 0.5s; }
-    .form-group:nth-child(6) { animation-delay: 0.6s; }
-
-    .form-control {
-        border: 2px solid #e0e0e0;
-        border-radius: 10px;
-        padding: 12px 18px;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        background: #f8f9fa;
-    }
-
-    .form-control:focus {
-        border-color: #667eea;
-        background: white;
-        box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
-        outline: none;
-    }
-
-    textarea.form-control {
-        resize: vertical;
-        min-height: 150px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .control-label {
-        font-weight: 600;
-        color: #333;
-        font-size: 15px;
-        margin-top: 8px;
-    }
-
-    .custom-file-input {
-        display: block;
-        cursor: pointer;
-    }
-
-    .custom-file-label {
-        border: 2px dashed #667eea;
-        border-radius: 10px;
-        padding: 30px;
-        text-align: center;
-        color: #667eea;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        background: #f0f4ff;
-    }
-
-    .custom-file-label:hover {
-        background: #e8edff;
-        border-color: #764ba2;
-        color: #764ba2;
-    }
-
-    .border-top {
-        border-top: 2px solid #e0e0e0 !important;
-        margin-top: 30px;
-        padding-top: 30px;
-    }
-
-    .card-body {
-        padding: 40px;
-    }
-
-    .btn {
-        border: none;
-        border-radius: 10px;
-        padding: 12px 40px;
-        font-weight: 600;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
-        color: white;
-    }
-
-    .btn-primary:active {
-        transform: translateY(-1px);
-    }
-
-    /* Animations */
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            font-size: 1.8rem;
-        }
-
-        .card-body {
-            padding: 25px;
-        }
-
-        .control-label {
-            text-align: left;
-            margin-bottom: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-    }
+    .page-wrapper { background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%); }
+    .page-title { font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .layout-card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+    .form-horizontal { padding: 24px 20px; }
+    .section-title { font-size: 1.1rem; font-weight: 700; color: var(--text-main); text-align: center; margin-bottom: 24px; }
+    .form-group.row { margin-bottom: 20px; align-items: center; }
+    .form-control { border: 2px solid var(--border-soft); border-radius: 10px; height: 46px; padding: 10px 14px; color: var(--text-main); background: #fcfdff; transition: 0.25s ease; }
+    textarea.form-control { min-height: 130px; resize: vertical; }
+    .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.18); background: #fff; }
+    label.control-label { font-weight: 700; color: #374151; margin-bottom: 0; }
+    .submit-wrap { border-top: 1px solid var(--border-soft); padding-top: 20px; }
+    .btn-primary { border: none; border-radius: 10px; padding: 11px 30px; font-weight: 700; letter-spacing: .2px; background: var(--primary-gradient); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28); }
+    .hint { color: var(--text-soft); font-size: .82rem; }
+    @media (max-width: 768px) { .btn-primary { width: 100%; } label.control-label { margin-bottom: 8px; } }
 </style>
 
 <div class="page-wrapper">
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12 d-flex no-block align-items-center">
-                <h4 class="page-title">✨ Create Blog</h4>
+                <h4 class="page-title">Add Blog</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Add Blog</li>
+                        </ol>
+                    </nav>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="container-fluid">
-        <div class="card">
-            <form class="form-horizontal" action="/blog/add-blog" enctype="multipart/form-data" method="post">
-                <div class="card-body">
-                    <div class="form-group row">
-                        <label class="col-sm-3 text-right control-label col-form-label">Author Name</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="name" placeholder="Enter author name" required>
-                        </div>
-                    </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="layout-card">
+                    <form class="form-horizontal" action="/blog/add-blog" enctype="multipart/form-data" method="post">
+                        <div class="card-body">
+                            <h4 class="section-title">Blog Details</h4>
 
-                    <div class="form-group row">
-                        <label class="col-sm-3 text-right control-label col-form-label">Blog Title</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="title" placeholder="Enter blog title" required>
-                        </div>
-                    </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Author Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="name" placeholder="Author name" required>
+                                </div>
+                            </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-3 text-right control-label col-form-label">Category</label>
-                        <div class="col-sm-9">
-                            <select class="form-control" name="category" required>
-                                <option value="">Select a category</option>
-                                <option value="Technology">🖥️ Technology</option>
-                                <option value="Programming">💻 Programming</option>
-                                <option value="Travel">✈️ Travel</option>
-                                <option value="Food">🍽️ Food</option>
-                                <option value="Education">📚 Education</option>
-                                <option value="Business">💼 Business</option>
-                            </select>
-                        </div>
-                    </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="title" placeholder="Blog title" required>
+                                </div>
+                            </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-3 text-right control-label col-form-label">Status</label>
-                        <div class="col-sm-9">
-                            <select class="form-control" name="status" required>
-                                <option value="">Select status</option>
-                                <option value="Draft">📝 Draft</option>
-                                <option value="Published">✅ Published</option>
-                            </select>
-                        </div>
-                    </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="category" required>
+                                        <option value="">Select category</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Programming">Programming</option>
+                                        <option value="Travel">Travel</option>
+                                        <option value="Food">Food</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Business">Business</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-3 text-right control-label col-form-label">Description</label>
-                        <div class="col-sm-9">
-                            <textarea class="form-control" name="description" placeholder="Write your blog description..." required></textarea>
-                        </div>
-                    </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Status</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="status" required>
+                                        <option value="">Select status</option>
+                                        <option value="Draft">Draft</option>
+                                        <option value="Published">Published</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                    <div class="form-group row">
-                        <label class="col-sm-3 text-right control-label col-form-label">Image</label>
-                        <div class="col-md-9">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="image" accept="image/*">
-                                <label class="custom-file-label">📸 Choose image</label>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" name="description" placeholder="Write blog description..." required></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Image</label>
+                                <div class="col-sm-9">
+                                    <input type="file" class="form-control" name="image" accept="image/*">
+                                    <small class="hint">Optional cover image.</small>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="submit-wrap text-center">
+                            <div class="card-body pt-0">
+                                <button type="submit" class="btn btn-primary">Publish Blog</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="border-top">
-                    <div class="card-body text-center">
-                        <button type="submit" class="btn btn-primary">📤 Publish Blog</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

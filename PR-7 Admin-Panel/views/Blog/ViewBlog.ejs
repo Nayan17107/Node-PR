@@ -1,451 +1,211 @@
 <%- include('../header') %>
-
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+    :root {
+        --primary-gradient: linear-gradient(135deg, #0f4c81 0%, #3b82f6 100%);
+        --surface: #ffffff;
+        --border-soft: #e5e7eb;
+        --text-main: #1f2937;
+        --text-soft: #6b7280;
+        --shadow: 0 12px 34px rgba(15, 76, 129, 0.12);
     }
 
-    .page-wrapper {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 40px 20px;
+    .page-wrapper { background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%); }
+    .page-title { font-weight: 800; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .filter-card,
+    .blog-card,
+    .empty-box {
+        background: var(--surface);
+        border: 1px solid var(--border-soft);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
     }
 
-    .page-breadcrumb {
-        margin-bottom: 30px;
-        animation: slideDown 0.6s ease-out;
-    }
-
-    .page-title {
-        color: white;
-        font-weight: 700;
-        font-size: 2.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-    }
-
-    /* Filter Card */
-    .card {
-        border: none;
-        border-radius: 15px;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.2);
-        overflow: hidden;
-        animation: fadeInUp 0.8s ease-out;
-    }
-
-    .card:first-of-type {
-        background: white;
-        margin-bottom: 30px;
-    }
-
-    .form-inline {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        align-items: flex-end;
-    }
-
-    .form-group {
-        margin-bottom: 0;
-        flex: 0 1 auto;
-    }
-
-    .form-group label {
-        font-weight: 600;
-        color: #333;
-        white-space: nowrap;
-    }
+    .filter-card { padding: 16px; margin-bottom: 22px; }
+    .filter-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr auto auto; gap: 10px; align-items: end; }
 
     .form-control {
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 10px 15px;
-        transition: all 0.3s ease;
-        background: #f8f9fa;
+        border: 2px solid var(--border-soft);
+        border-radius: 10px;
+        height: 44px;
+        background: #fcfdff;
     }
-
     .form-control:focus {
-        border-color: #667eea;
-        background: white;
-        box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.18);
         outline: none;
     }
 
-    .btn {
+    .btn-main,
+    .btn-reset,
+    .btn-view,
+    .btn-edit,
+    .btn-delete {
         border: none;
-        border-radius: 8px;
-        padding: 10px 25px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        font-size: 13px;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-secondary {
-        background: #e0e0e0;
-        color: #333;
-    }
-
-    .btn-secondary:hover {
-        background: #d0d0d0;
-        color: #000;
-    }
-
-    /* Blog Cards */
-    .blog-card {
-        border: none;
-        border-radius: 15px;
-        overflow: hidden;
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        background: white;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        animation: scaleIn 0.6s ease-out forwards;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .blog-card:nth-child(1) { animation-delay: 0.1s; }
-    .blog-card:nth-child(2) { animation-delay: 0.2s; }
-    .blog-card:nth-child(3) { animation-delay: 0.3s; }
-    .blog-card:nth-child(4) { animation-delay: 0.4s; }
-    .blog-card:nth-child(5) { animation-delay: 0.5s; }
-    .blog-card:nth-child(6) { animation-delay: 0.6s; }
-
-    .blog-card:hover {
-        transform: translateY(-15px);
-        box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    }
-
-    .box {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        height: 200px;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-
-    .blog-card:hover .box img {
-        transform: scale(1.1);
-    }
-
-    .card-body {
-        padding: 25px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .card-title {
+        border-radius: 9px;
+        padding: 9px 14px;
+        color: #fff;
         font-weight: 700;
-        color: #333;
-        margin-bottom: 12px;
-        font-size: 1.2rem;
-        line-height: 1.4;
-    }
-
-    .card-text {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-
-    .card-text strong {
-        color: #333;
-    }
-
-    .badge {
-        border-radius: 20px;
-        padding: 5px 12px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .badge-info {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-    }
-
-    .btn-primary-sm {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 16px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-right: 8px;
-        margin-bottom: 8px;
-    }
-
-    .btn-warning-sm {
-        background: #ffa726;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 16px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-right: 8px;
-        margin-bottom: 8px;
-    }
-
-    .btn-danger-sm {
-        background: #ef5350;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 16px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        margin-right: 8px;
-        margin-bottom: 8px;
-    }
-
-    .btn-primary-sm:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
-    .btn-warning-sm:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 167, 38, 0.4); }
-    .btn-danger-sm:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(239, 83, 80, 0.4); }
-
-    /* Pagination */
-    .pagination {
-        justify-content: center;
-        margin-top: 40px;
-        gap: 10px;
-    }
-
-    .page-item {
-        margin: 0;
-    }
-
-    .page-link {
-        border: 2px solid #667eea;
-        border-radius: 8px;
-        color: #667eea;
-        padding: 10px 15px;
-        transition: all 0.3s ease;
-        font-weight: 600;
-    }
-
-    .page-link:hover {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-color: #667eea;
-        transform: translateY(-2px);
-    }
-
-    .page-item.active .page-link {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-color: #667eea;
-        color: white;
-    }
-
-    .alert {
-        border-radius: 12px;
-        border: none;
-        padding: 20px 25px;
-        animation: fadeInUp 0.6s ease-out;
-    }
-
-    .alert-info {
-        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-        color: #667eea;
-        font-weight: 600;
-    }
-
-    .alert a {
-        color: #667eea;
-        font-weight: 700;
+        font-size: .8rem;
         text-decoration: none;
+        display: inline-block;
     }
 
-    .alert a:hover {
-        text-decoration: underline;
+    .btn-main,
+    .btn-view { background: var(--primary-gradient); }
+    .btn-reset { background: #64748b; }
+    .btn-edit { background: #f59e0b; }
+    .btn-delete { background: #ef4444; }
+
+    .blog-card {
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: .2s ease;
+    }
+    .blog-card:hover { transform: translateY(-4px); }
+
+    .blog-image {
+        width: 100%;
+        height: 190px;
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        overflow: hidden;
+    }
+    .blog-image img { width: 100%; height: 100%; object-fit: cover; }
+
+    .blog-body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+    .blog-title { font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+    .meta { color: var(--text-soft); font-size: .87rem; margin-bottom: 6px; }
+    .badge-status {
+        font-size: .72rem;
+        font-weight: 700;
+        background: #eff6ff;
+        color: #1e40af;
+        border-radius: 999px;
+        padding: 4px 8px;
+    }
+    .actions { margin-top: auto; padding-top: 10px; }
+
+    .pagination { justify-content: center; margin-top: 24px; }
+    .page-link {
+        border: 1px solid var(--border-soft);
+        color: #1e40af;
+        border-radius: 8px;
+        margin: 0 3px;
+    }
+    .page-item.active .page-link {
+        border-color: #3b82f6;
+        background: #3b82f6;
+        color: #fff;
     }
 
-    /* Animations */
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+    .empty-box { padding: 28px; text-align: center; color: #1e3a8a; font-weight: 600; }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @keyframes scaleIn {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .page-title {
-            font-size: 1.8rem;
-        }
-
-        .form-inline {
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .form-group {
-            width: 100%;
-        }
-
-        .form-control {
-            width: 100%;
-        }
-
-        .btn {
-            width: 100%;
-        }
+    @media (max-width: 992px) {
+        .filter-grid { grid-template-columns: 1fr; }
+        .btn-main, .btn-reset { width: 100%; text-align: center; }
     }
 </style>
 
 <div class="page-wrapper">
     <div class="page-breadcrumb">
         <div class="row">
-            <div class="col-12">
-                <h4 class="page-title">📚 All Blogs</h4>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <!-- Filter Card -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form method="GET" action="/blog/view-blog" class="form-inline">
-                            <div class="form-group">
-                                <label class="mr-2">🔍 Search:</label>
-                                <input type="text" class="form-control" name="search" placeholder="Search by title or author" value="<%= search %>">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="mr-2">📂 Category:</label>
-                                <select class="form-control" name="category">
-                                    <option value="">All Categories</option>
-                                    <% categories.forEach((cat) => { %>
-                                        <option value="<%= cat %>" <% if(category === cat) { %>selected<% } %>><%= cat %></option>
-                                    <% }); %>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="mr-2">📌 Status:</label>
-                                <select class="form-control" name="sort">
-                                    <option value="">All Status</option>
-                                    <option value="draft" <% if(sort === 'draft') { %>selected<% } %>>📝 Draft</option>
-                                    <option value="published" <% if(sort === 'published') { %>selected<% } %>>✅ Published</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">🔎 Filter</button>
-                            <a href="/blog/view-blog" class="btn btn-secondary">↻ Reset</a>
-                        </form>
-                    </div>
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">All Blogs</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">View Blog</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Blogs Grid -->
+    <div class="container-fluid">
+        <div class="filter-card">
+            <form method="GET" action="/blog/view-blog" class="filter-grid">
+                <div>
+                    <label class="mb-1">Search</label>
+                    <input type="text" class="form-control" name="search" placeholder="Title or author" value="<%= search %>">
+                </div>
+                <div>
+                    <label class="mb-1">Category</label>
+                    <select class="form-control" name="category">
+                        <option value="">All Categories</option>
+                        <% categories.forEach((cat) => { %>
+                            <option value="<%= cat %>" <% if (category === cat) { %>selected<% } %>><%= cat %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-1">Status</label>
+                    <select class="form-control" name="sort">
+                        <option value="">All Status</option>
+                        <option value="draft" <% if (sort === 'draft') { %>selected<% } %>>Draft</option>
+                        <option value="published" <% if (sort === 'published') { %>selected<% } %>>Published</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-main">Filter</button>
+                <a href="/blog/view-blog" class="btn-reset">Reset</a>
+            </form>
+        </div>
+
         <div class="row">
-            <% if(blogs && blogs.length > 0) { %>
+            <% if (blogs && blogs.length > 0) { %>
                 <% blogs.forEach((blog) => { %>
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                        <div class="card blog-card">
-                            <div class="box bg-cyan text-center">
-                                <% if(blog.image) { %>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="blog-card">
+                            <div class="blog-image">
+                                <% if (blog.image) { %>
                                     <img src="<%= blog.image %>" alt="<%= blog.title %>">
                                 <% } %>
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title"><%= blog.title %></h5>
-                                <p class="card-text"><strong>👤 Author:</strong> <%= blog.name %></p>
-                                <p class="card-text"><strong>📂 Category:</strong> <%= blog.category %></p>
-                                <p class="card-text"><strong>📌 Status:</strong> <span class="badge badge-info"><%= blog.status %></span></p>
-                                <p class="card-text"><%= blog.description.substring(0, 80) %>...</p>
-                                <div style="margin-top: auto;">
-                                    <a href="/blog/view-single-blog/<%= blog._id %>" class="btn btn-primary-sm">👁️ View</a>
-                                    <a href="/blog/edit-blog/<%= blog._id %>" class="btn btn-warning-sm">✏️ Edit</a>
-                                    <a href="/blog/delete-blog/<%= blog._id %>" class="btn btn-danger-sm" onclick="return confirm('Delete this blog?')">🗑️ Delete</a>
+                            <div class="blog-body">
+                                <h5 class="blog-title"><%= blog.title %></h5>
+                                <p class="meta"><strong>Author:</strong> <%= blog.name %></p>
+                                <p class="meta"><strong>Category:</strong> <%= blog.category %></p>
+                                <p class="meta"><strong>Status:</strong> <span class="badge-status"><%= blog.status %></span></p>
+                                <p class="meta"><%= blog.description.substring(0, 90) %>...</p>
+                                <div class="actions">
+                                    <a href="/blog/view-single-blog/<%= blog._id %>" class="btn-view">View</a>
+                                    <a href="/blog/edit-blog/<%= blog._id %>" class="btn-edit">Edit</a>
+                                    <a href="/blog/delete-blog/<%= blog._id %>" class="btn-delete" onclick="return confirm('Delete this blog?')">Delete</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                <% }); %>
+                <% }) %>
             <% } else { %>
                 <div class="col-12">
-                    <div class="alert alert-info">No blogs found. <a href="/blog/add-blog">Create your first blog →</a></div>
+                    <div class="empty-box">No blogs found. <a href="/blog/add-blog">Create your first blog</a></div>
                 </div>
             <% } %>
         </div>
 
-        <!-- Pagination -->
-        <% if(totalPages > 1) { %>
+        <% if (totalPages > 1) { %>
             <div class="row">
                 <div class="col-12">
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
-                            <% if(currentPage > 1) { %>
+                            <% if (currentPage > 1) { %>
                                 <li class="page-item">
-                                    <a class="page-link" href="/blog/view-blog?page=<%= currentPage - 1 %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">← Previous</a>
+                                    <a class="page-link" href="/blog/view-blog?page=<%= currentPage - 1 %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">Previous</a>
                                 </li>
                             <% } %>
 
-                            <% for(let i = 1; i <= totalPages; i++) { %>
-                                <li class="page-item <% if(i === currentPage) { %>active<% } %>">
+                            <% for (let i = 1; i <= totalPages; i++) { %>
+                                <li class="page-item <% if (i === currentPage) { %>active<% } %>">
                                     <a class="page-link" href="/blog/view-blog?page=<%= i %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>"><%= i %></a>
                                 </li>
                             <% } %>
 
-                            <% if(currentPage < totalPages) { %>
+                            <% if (currentPage < totalPages) { %>
                                 <li class="page-item">
-                                    <a class="page-link" href="/blog/view-blog?page=<%= currentPage + 1 %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">Next →</a>
+                                    <a class="page-link" href="/blog/view-blog?page=<%= currentPage + 1 %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">Next</a>
                                 </li>
                             <% } %>
                         </ul>

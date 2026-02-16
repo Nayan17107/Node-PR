@@ -1,339 +1,137 @@
-<%- include('../header')%>
+<%- include('../header') %>
     <style>
-        /* ===== Edit Admin Specific Styles ===== */
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --warning-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --card-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
-            --transition-smooth: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            --border-radius: 12px;
+            --primary-gradient: linear-gradient(135deg, #0f4c81 0%, #3b82f6 100%);
+            --surface: #ffffff;
+            --border-soft: #e5e7eb;
+            --text-main: #1f2937;
+            --text-soft: #6b7280;
+            --shadow: 0 12px 34px rgba(15, 76, 129, 0.12);
         }
 
         .page-title {
-            background: var(--warning-gradient);
+            font-weight: 800;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-            margin-bottom: 10px;
         }
 
-        .page-title::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--warning-gradient);
-            border-radius: 2px;
-            animation: slideIn 0.8s ease-out;
+        .page-wrapper {
+            background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
         }
 
-        @keyframes slideIn {
-            from {
-                width: 0;
-                opacity: 0;
-            }
-
-            to {
-                width: 60px;
-                opacity: 1;
-            }
-        }
-
-        .card {
-            border: none;
-            border-radius: var(--border-radius);
-            box-shadow: var(--card-shadow);
+        .layout-card {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
             overflow: hidden;
-            transition: var(--transition-smooth);
-            animation: cardAppear 0.6s ease-out;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        @keyframes cardAppear {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .form-horizontal {
-            padding: 20px;
+            padding: 24px 20px;
         }
 
-        .card-title.yext-center {
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
             text-align: center;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 30px;
-            position: relative;
-            padding-bottom: 15px;
-        }
-
-        .card-title.yext-center::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--warning-gradient);
-            border-radius: 3px;
+            margin-bottom: 24px;
         }
 
         .form-group.row {
-            margin-bottom: 25px;
-            transition: var(--transition-smooth);
-        }
-
-        .form-group.row:hover {
-            transform: translateX(5px);
+            margin-bottom: 20px;
+            align-items: center;
         }
 
         .form-control {
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            padding: 12px 15px;
-            font-size: 15px;
-            transition: var(--transition-smooth);
-            background-color: #fcfcfc;
+            border: 2px solid var(--border-soft);
+            border-radius: 10px;
+            height: 46px;
+            padding: 10px 14px;
+            color: var(--text-main);
+            background: #fcfdff;
+            transition: 0.25s ease;
         }
 
         .form-control:focus {
-            border-color: #fda085;
-            box-shadow: 0 0 0 0.2rem rgba(253, 160, 133, 0.25);
-            transform: translateY(-2px);
-            background-color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.18);
+            background: #fff;
         }
 
-        .form-control:hover:not(:focus) {
-            border-color: #fdc6b3;
+        .form-control:disabled {
+            background: #f3f4f6;
+            color: #9ca3af;
         }
 
         label.control-label {
-            font-weight: 600;
-            color: #495057;
-            padding-top: 12px;
-            transition: color 0.3s ease;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 0;
         }
 
-        .form-group.row:hover label.control-label {
-            color: #fda085;
-        }
-
-        .custom-control.custom-radio {
-            padding-left: 2rem;
+        .custom-control {
             margin-right: 20px;
         }
 
-        .custom-control-input:checked~.custom-control-label::before {
-            background: var(--warning-gradient);
-            border-color: #fda085;
-        }
-
         .custom-control-label {
-            cursor: pointer;
-            transition: color 0.3s ease;
-            padding-top: 2px;
-        }
-
-        .custom-control-label:hover {
-            color: #fda085;
-        }
-
-        .custom-control-input:focus~.custom-control-label::before {
-            box-shadow: 0 0 0 0.2rem rgba(253, 160, 133, 0.25);
-        }
-
-        .btn-warning {
-            background: var(--warning-gradient);
-            border: none;
-            border-radius: 8px;
-            padding: 12px 35px;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: var(--transition-smooth);
-            position: relative;
-            overflow: hidden;
-            color: white;
+            color: #4b5563;
         }
 
-        .btn-warning:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 14px rgba(253, 160, 133, 0.4);
-            color: white;
+        .custom-control-input:checked~.custom-control-label::before {
+            border-color: #2563eb;
+            background-color: #2563eb;
         }
 
-        .btn-warning:active {
-            transform: translateY(-1px);
-        }
-
-        .btn-warning::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-
-        .btn-warning:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(40, 40);
-                opacity: 0;
-            }
-        }
-
-        .border-top {
-            border-top: 1px solid #f0f0f0 !important;
-            padding-top: 25px;
-        }
-
-        input[type="file"] {
-            padding: 8px;
-        }
-
-        input[type="file"]::file-selector-button {
-            background: var(--warning-gradient);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            margin-right: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        input[type="file"]::file-selector-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(253, 160, 133, 0.3);
-        }
-
-        /* Profile image preview styling */
-        .profile-img-preview {
-            margin-top: 10px;
+        .img-preview {
+            width: 120px;
+            height: 120px;
             border-radius: 10px;
-            border: 3px solid #f0f0f0;
-            transition: var(--transition-smooth);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            border: 2px solid #dbeafe;
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.14);
         }
 
-        .profile-img-preview:hover {
-            transform: scale(1.05);
-            border-color: #fda085;
-            box-shadow: 0 8px 25px rgba(253, 160, 133, 0.2);
+        .submit-wrap {
+            border-top: 1px solid var(--border-soft);
+            padding-top: 20px;
         }
 
-        /* Breadcrumb styling */
-        .breadcrumb {
-            background-color: transparent;
-            padding: 0;
+        .btn-primary {
+            border: none;
+            border-radius: 10px;
+            padding: 11px 30px;
+            font-weight: 700;
+            letter-spacing: .2px;
+            background: var(--primary-gradient);
         }
 
-        .breadcrumb-item.active {
-            color: #fda085;
-            font-weight: 500;
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
         }
 
-        .breadcrumb-item a {
-            color: #6c757d;
-            transition: color 0.3s ease;
-            text-decoration: none;
+        .hint {
+            color: var(--text-soft);
+            font-size: .82rem;
         }
 
-        .breadcrumb-item a:hover {
-            color: #fda085;
-        }
-
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .form-group.row {
-                margin-bottom: 20px;
+            .btn-primary {
+                width: 100%;
             }
 
             label.control-label {
                 margin-bottom: 8px;
-                padding-top: 0;
             }
-
-            .btn-warning {
-                width: 100%;
-            }
-        }
-
-        /* Animation for form elements */
-        .form-group.row:nth-child(1) {
-            animation-delay: 0.1s;
-            animation-fill-mode: both;
-        }
-
-        .form-group.row:nth-child(2) {
-            animation-delay: 0.2s;
-            animation-fill-mode: both;
-        }
-
-        .form-group.row:nth-child(3) {
-            animation-delay: 0.3s;
-            animation-fill-mode: both;
-        }
-
-        .form-group.row:nth-child(4) {
-            animation-delay: 0.4s;
-            animation-fill-mode: both;
-        }
-
-        .form-group.row:nth-child(5) {
-            animation-delay: 0.5s;
-            animation-fill-mode: both;
-        }
-
-        .form-group.row:nth-child(6) {
-            animation-delay: 0.6s;
-            animation-fill-mode: both;
-        }
-
-        .form-group.row:nth-child(7) {
-            animation-delay: 0.7s;
-            animation-fill-mode: both;
         }
     </style>
 
-    <!-- ============================================================== -->
-    <!-- Page wrapper  -->
-    <!-- ============================================================== -->
     <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
@@ -349,113 +147,110 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
+
         <div class="container-fluid">
-            <!-- ============================================================== -->
-            <!-- Start Page Content -->
-            <!-- ============================================================== -->
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
-                    <div class="card">
+                    <div class="layout-card">
                         <form class="form-horizontal" action="/admin/update-admin/<%=admin.id%>" method="post"
                             enctype="multipart/form-data">
                             <div class="card-body">
-                                <h4 class="card-title yext-center">Update Administrator</h4>
+                                <h4 class="section-title">Administrator Details</h4>
+
                                 <div class="form-group row">
                                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">First
                                         Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" value="<%=admin.firstname%>" id="fname"
-                                            name="firstname" placeholder="First Name Here">
+                                            name="firstname" placeholder="First name" required>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last
                                         Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" value="<%=admin.lastname%>" id="lname"
-                                            name="lastname" placeholder="Last Name Here">
+                                            name="lastname" placeholder="Last name" required>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label for="email"
                                         class="col-sm-3 text-right control-label col-form-label">Email</label>
                                     <div class="col-sm-9">
                                         <input type="email" class="form-control" value="<%=admin.email%>" id="email"
-                                            name="email" placeholder="Email Here">
+                                            name="email" placeholder="name@example.com" required>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label for="password"
                                         class="col-sm-3 text-right control-label col-form-label">Password</label>
                                     <div class="col-sm-9">
                                         <input type="password" disabled class="form-control" value="<%=admin.password%>"
-                                            id="password" name="password" placeholder="Password Here">
-                                        <small class="form-text text-muted">Password cannot be edited for security
-                                            reasons</small>
+                                            id="password" name="password">
+                                        <small class="hint">Password cannot be edited for security reasons.</small>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label class="col-sm-3 text-right control-label col-form-label">Gender</label>
-                                    <div class="col-md-9 d-flex">
-                                        <div class="custom-control custom-radio mx-3">
+                                    <div class="col-sm-9 d-flex align-items-center">
+                                        <div class="custom-control custom-radio">
                                             <input type="radio" class="custom-control-input" name="gender"
-                                                id="customControlValidation1" <%=admin.gender=="Male" ?"checked":""%>
-                                            value="Male" required>
+                                                id="customControlValidation1" <%=admin.gender=="Male" ? "checked" : ""
+                                                %> value="Male" required>
                                             <label class="custom-control-label"
                                                 for="customControlValidation1">Male</label>
                                         </div>
                                         <div class="custom-control custom-radio">
                                             <input type="radio" class="custom-control-input" name="gender"
-                                                id="customControlValidation2" <%=admin.gender=="Female" ?"checked":""%>
-                                            value="Female" required>
+                                                id="customControlValidation2" <%=admin.gender=="Female" ? "checked" : ""
+                                                %> value="Female" required>
                                             <label class="custom-control-label"
                                                 for="customControlValidation2">Female</label>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label for="contactNo"
-                                        class="col-sm-3 text-right control-label col-form-label">Contact
-                                        No</label>
+                                        class="col-sm-3 text-right control-label col-form-label">Contact No</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="contactNo"
-                                            value="<%=admin.contactNo%>" name="contactNo" placeholder="Contact No Here">
+                                            value="<%=admin.contactNo%>" name="contactNo" placeholder="Contact number"
+                                            required>
                                     </div>
                                 </div>
+
                                 <div class="form-group row">
                                     <label for="profileImage"
-                                        class="col-sm-3 text-right control-label col-form-label">Profile
-                                        Image</label>
+                                        class="col-sm-3 text-right control-label col-form-label">Profile Image</label>
                                     <div class="col-sm-9">
-                                        <input type="file" class="form-control" id="profileImage" name="profileImage">
-                                        <div class="mt-3">
-                                            <p class="mb-2">Current Image:</p>
-                                            <img src="<%=admin.profileImage%>" class="profile-img-preview" height="120"
-                                                width="120" alt="Profile Image">
-                                        </div>
+                                        <input type="file" class="form-control" id="profileImage" name="profileImage"
+                                            accept="image/*">
+                                        <% if (admin.profileImage) { %>
+                                            <div class="mt-3">
+                                                <p class="mb-2">Current Image:</p>
+                                                <img src="<%=admin.profileImage%>" class="img-preview"
+                                                    alt="Profile Image">
+                                            </div>
+                                            <% } %>
                                     </div>
                                 </div>
                             </div>
-                            <div class="border-top text-center">
-                                <div class="card-body ">
-                                    <button type="submit" class="btn btn-warning">Update Administrator</button>
+
+                            <div class="submit-wrap text-center">
+                                <div class="card-body pt-0">
+                                    <button type="submit" class="btn btn-primary">Update Administrator</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <%- include('../footer')%>
+    </div>
+
+    <%- include('../footer') %>
