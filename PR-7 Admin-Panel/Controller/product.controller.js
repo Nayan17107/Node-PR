@@ -80,53 +80,148 @@ exports.viewproduct = async (req, res) => {
     }
 };
 
-// exports.deleteextracategory = async (req, res) => {
-//     try {
-//         let id = req.params.id;
-//         let extracategory = await ExtracategoryModel.findById(id);
+exports.deletproduct = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let product = await ProductModel.findById(id);
 
-//         if (!extracategory) {
-//             // console.log("Extra Category is not found");
-//             return res.redirect('/extracategory/view-extracategory');
-//         }
+        if (!product) {
+            return res.redirect('/product/view-product');
+        }
 
-//         await ExtracategoryModel.findByIdAndDelete(id);
-//         req.flash('success', "ExtraCategory Deleted!!!!")
-//         return res.redirect('/extracategory/view-extracategory');
-//     } catch (error) {
-//         console.log(error)
-//         res.redirect('/')
-//     }
-// };
+        let productImages = [];
+        if (product.image && product.image !== "") {
+            productImages.push(product.image);
+        }
+        if (product.images && product.images.length > 0) {
+            productImages.push(...product.images.filter((img) => img && img !== ""));
+        }
 
-// exports.editextracategory = async (req, res) => {
-//     try {
-//         const id = req.params.id;
-//         // console.log(id);
+        productImages = [...new Set(productImages)];
 
-//         let extracategory = await ExtracategoryModel.findById(id)
-//         res.render('ExtraCategory/EditExtraCategory', { extracategory });
-//     } catch (error) {
-//         console.log(error)
-//         res.redirect('/')
-//     }
-// };
+        for (let image of productImages) {
+            try {
+                let imagepath = path.join(__dirname, '..', image);
+                fs.unlinkSync(imagepath);
+            } catch (err) {
+                console.log('File Missing: ', err.message);
+            }
+        }
 
-// exports.updateectraCategory = async (req, res) => {
-//     try {
-//         let id = req.params.id;
-//         // console.log(req.body.subcategory);
+        await ProductModel.findByIdAndDelete(id);
+        req.flash('success', "Product Deleted!!!!")
+        return res.redirect('/product/view-product');
+    } catch (error) {
+        console.log(error)
+        res.redirect('/')
+    }
+};
 
-//         await ExtracategoryModel.findByIdAndUpdate(
-//             id,
-//             { ...req.body },
-//             { new: true }
-//         );
+exports.editproduct = async (req, res) => {
+    try {
+        const id = req.params.id;
+        let product = await ProductModel.findById(id);
 
-//         // console.log(subcategory)
-//         req.flash('success', "ExtraCategory Updated!!!!")
-//         res.redirect('/extracategory/view-extracategory')
-//     } catch (error) {
-//         console.log(error)
-//     }
-// };
+        if (!product) {
+            return res.redirect('/product/view-product');
+        }
+
+        let category = await CategoryModel.find();
+        let subcategory = await SubCategoryModel.find({ categoryid: product.categoryid });
+        let extracategory = await ExtracategoryModel.find({ subcategoryid: product.subcategoryid });
+
+        res.render('product/EditProduct', { product, category, subcategory, extracategory });
+    } catch (error) {
+        console.log(error)
+        res.redirect('/')
+    }
+};
+
+exports.updateproduct = async (req, res) => {
+    try {
+        let id = req.params.id;
+        let product = await ProductModel.findById(id);
+
+        if (!product) {
+            return res.redirect('/product/view-product');
+        }
+
+        let image = product.image || '';
+        if (req.files && req.files.image && req.files.image[0]) {
+            if (image !== '') {
+                let imagepath = path.join(__dirname, '..', image);
+                try {
+                    fs.unlinkSync(imagepath);
+                } catch (err) {
+                    console.log('File Missing: ', err.message);
+                }
+            }
+            image = `/uploads/${req.files.image[0].filename}`;
+        }
+
+        let images = product.images || [];
+        if (req.files && req.files.images && req.files.images.length > 0) {
+            if (images.length > 0) {
+                images.forEach((img) => {
+                    if (img !== '') {
+                        let imagepath = path.join(__dirname, '..', img);
+                        try {
+                            fs.unlinkSync(imagepath);
+                        } catch (err) {
+                            console.log('File Missing: ', err.message);
+                        }
+                    }
+                });
+            }
+
+            images = req.files.images.map((file) => `/uploads/${file.filename}`);
+
+            if (!(req.files.image && req.files.image[0])) {
+                image = images[0] || image;
+            }
+        }
+
+        await ProductModel.findByIdAndUpdate(
+            id,
+            { ...req.body, image, images },
+            { new: true }
+        );
+
+        req.flash('success', "Product Updated!!!!")
+        res.redirect('/product/view-product')
+    } catch (error) {
+        console.log(error)
+        res.redirect('/')
+    }
+};
+
+
+exports.viewsingleproduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await ProductModel.findById(id)
+            .populate('categoryid', 'categoryname')
+            .populate('subcategoryid', 'subcategoryname')
+            .populate('extracategoryid', 'extracategoryname');
+
+        if (!product) {
+            return res.render('product/ViewSingleProduct', { product: null, gallery: [] });
+        }
+
+        let gallery = [];
+        if (product.image) {
+            gallery.push(product.image);
+        }
+        if (product.images && product.images.length > 0) {
+            gallery.push(...product.images);
+        }
+
+        gallery = [...new Set(gallery)];
+
+        res.render('product/ViewSingleProduct', { product, gallery })
+    } catch (error) {
+        console.log(error)
+        res.redirect('/')
+    }
+}
+

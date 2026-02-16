@@ -235,9 +235,9 @@
                                 </div>
 
                                 <div class="product-actions">
-                                    <a href="javascript:void(0)" class="btn-card btn-view">View Product</a>
-                                    <a href="javascript:void(0)" class="btn-card btn-edit">Edit</a>
-                                    <a href="javascript:void(0)" class="btn-card btn-delete">Delete</a>
+                                    <a href="/product/view-single-product/<%= product.id %>" class="btn-card btn-view">View Product</a>
+                                    <a href="/product/edit-product/<%= product.id %>" class="btn-card btn-edit">Edit</a>
+                                    <a href="/product/delete-product/<%= product.id %>" class="btn-card btn-delete">Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -255,3 +255,4 @@
 </div>
 
 <%- include('../footer') %>
+
