@@ -1,142 +1,80 @@
 <!DOCTYPE html>
-<html dir="ltr">
+<html dir="ltr" lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
+    <meta name="description" content="Product Admin Authentication">
+    <meta name="author" content="Product Admin">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
-    <title>Matrix Template - The Ultimate Multipurpose admin template</title>
-    <!-- Custom CSS -->
+    <title>Login | Product Admin Panel</title>
+    <link href="/assets/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/dist/css/style.min.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/dist/css/custom-ui.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="auth-page">
     <div class="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
         <div class="preloader">
             <div class="lds-ripple">
                 <div class="lds-pos"></div>
                 <div class="lds-pos"></div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Login box.scss -->
-        <!-- ============================================================== -->
-        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center bg-dark">
-            <div class="auth-box bg-dark border-top border-secondary">
-                <div id="loginform">
-                    <div class="text-center p-t-20 p-b-20">
-                        <span class="db"><img src="/assets/images/logo.png" alt="logo" /></span>
-                    </div>
-                    <!-- Form -->
-                    <form class="form-horizontal m-t-20" id="loginform" action="/user/login" method="post">
-                        <div class="row p-b-30">
-                            <div class="col-12">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-success text-white" id="basic-addon1"><i
-                                                class="ti-user"></i></span>
-                                    </div>
-                                    <input type="email" class="form-control form-control-lg" name="email"
-                                        placeholder="email" aria-label="email" aria-describedby="basic-addon1"
-                                        required="">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text bg-warning text-white" id="basic-addon2"><i
-                                                class="ti-pencil"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control form-control-lg" name="password"
-                                        placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"
-                                        required="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row border-top border-secondary">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <div class="p-t-20">
-                                        <button class="btn btn-info" id="to-recover" type="button"><i
-                                                class="fa fa-lock m-r-5"></i> Lost password?</button>
-                                        <button class="btn btn-success float-right" type="submit">Login</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+
+        <div class="auth-wrapper d-flex justify-content-center align-items-center">
+            <div class="auth-panel">
+                <div class="auth-branding">
+                    <h1>Product Admin</h1>
+                    <p>Manage products, blogs, and categories in one secure dashboard.</p>
+                    <div class="auth-badge">Secure Login</div>
                 </div>
-                <div id="recoverform">
-                    <div class="text-center">
-                        <span class="text-white">Enter your e-mail address below and we will send you instructions how
-                            to recover a password.</span>
-                    </div>
-                    <div class="row m-t-20">
-                        <!-- Form -->
-                        <form class="col-12" action="/user/forget-password" method="post">
-                            <!-- email -->
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-danger text-white" id="basic-addon1"><i
-                                            class="ti-email"></i></span>
-                                </div>
-                                <input type="text" class="form-control form-control-lg" name="email"
-                                    placeholder="Email Address" aria-label="Username" aria-describedby="basic-addon1">
+
+                <div class="auth-form-wrap">
+                    <div id="loginform">
+                        <h3 class="auth-form-title">Sign In</h3>
+                        <form class="form-horizontal" id="loginFormAction" action="/user/login" method="post">
+                            <div class="form-group mb-3">
+                                <input type="email" class="form-control form-control-lg" name="email"
+                                    placeholder="Email address" required>
                             </div>
-                            <!-- pwd -->
-                            <div class="row m-t-20 p-t-20 border-top border-secondary">
-                                <div class="col-12">
-                                    <a class="btn btn-success" href="#" id="to-login" name="action">Back To Login</a>
-                                    <button class="btn btn-info float-right" type="submit" name="action">Sent
-                                        otp</button>
-                                </div>
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control form-control-lg" name="password"
+                                    placeholder="Password" required>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <button class="btn btn-link p-0" id="to-recover" type="button">Forgot password?</button>
+                                <button class="btn btn-primary" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="recoverform" style="display:none;">
+                        <h3 class="auth-form-title">Recover Password</h3>
+                        <p class="text-muted mb-3">Enter your email and we will send an OTP.</p>
+                        <form action="/user/forget-password" method="post">
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control form-control-lg" name="email"
+                                    placeholder="Email Address" required>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <a class="btn btn-link p-0" href="#" id="to-login" name="action">Back to login</a>
+                                <button class="btn btn-primary" type="submit" name="action">Send OTP</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- Login box.scss -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper scss in scafholding.scss -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper scss in scafholding.scss -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Right Sidebar -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Right Sidebar -->
-        <!-- ============================================================== -->
     </div>
-    <!-- ============================================================== -->
-    <!-- All Required js -->
-    <!-- ============================================================== -->
+
     <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
     <script src="/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <script src="/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- ============================================================== -->
-    <!-- This page plugin js -->
-    <!-- ============================================================== -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         <% if (locals.flash.success && locals.flash.success.length > 0) { %>
@@ -157,7 +95,7 @@
             });
         <% } %>
 
-         <% if (locals.flash.error && locals.flash.error.length > 0) { %>
+        <% if (locals.flash.error && locals.flash.error.length > 0) { %>
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -175,7 +113,7 @@
             });
         <% } %>
 
-         <% if (locals.flash.warning && locals.flash.warning.length > 0) { %>
+        <% if (locals.flash.warning && locals.flash.warning.length > 0) { %>
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -189,23 +127,18 @@
             });
             Toast.fire({
                 icon: "warning",
-                title: "<%= locals.flash.warning%>"
+                title: "<%= locals.flash.warning %>"
             });
         <% } %>
     </script>
     <script>
-
-            $('[data-toggle="tooltip"]').tooltip();
         $(".preloader").fadeOut();
-        // ============================================================== 
-        // Login and Recover Password 
-        // ============================================================== 
         $('#to-recover').on("click", function () {
             $("#loginform").slideUp();
             $("#recoverform").fadeIn();
         });
-        $('#to-login').click(function () {
-
+        $('#to-login').click(function (e) {
+            e.preventDefault();
             $("#recoverform").hide();
             $("#loginform").fadeIn();
         });
