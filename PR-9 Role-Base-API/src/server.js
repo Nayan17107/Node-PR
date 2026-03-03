@@ -1,5 +1,5 @@
 const express = require("express");
-require('dotenv').config();
+require('dotenv').config({ path: 'src/.env' });
 const port = process.env.PORT;
 const app = express();
 const dbConnect = require("./config/dbConnect");
@@ -18,7 +18,7 @@ app.use("/uploads", express.static('src/uploads'));
 
 
 //routes
-app.use("/api", require("./routes/index.routes"));
+app.use("/", require("./routes/index.routes"));
 
 
 app.listen(port, () => {

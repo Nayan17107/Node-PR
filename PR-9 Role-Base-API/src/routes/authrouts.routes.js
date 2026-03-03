@@ -1,8 +1,10 @@
 const express = require('express');
-const { registeradmin } = require('../controller/admin.controller');
+const { registeradmin, loginadmin } = require('../controller/admin.controller');
+const upload = require('../middleware/uploadImage');
 
 const routes = express.Router();
 
-routes.post("/register-admin", uploadImage.single('profileImage'), registeradmin);
+routes.post("/register-admin", upload.single('profileImage'), registeradmin);
+routes.post("/login", loginadmin);
 
 module.exports = routes;

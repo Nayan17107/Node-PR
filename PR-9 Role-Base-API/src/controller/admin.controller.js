@@ -26,3 +26,22 @@ exports.registeradmin = async (req, res) => {
         return res.json({message: 'Server error'})
     }
 }
+
+exports.loginadmin = async (req, res) => {
+    try {
+        let admin = await User.findOne({email: req.body.email, isDelete: false})
+        if(!admin){
+            return res.status(404).json({message: 'Admin not found'});
+        }
+
+        let match = await bcrypt.compare(req.body.password, admin.password);
+        if(!match){
+            return res.json({message: 'Email or Password is incorrect'});
+        }
+        let token = jwt.sign({ userId: admin._id}, process.env.JWT_SECRET)
+        return res.json({message: 'Login Success', status: 200, token})
+    } catch (error) {
+        console.log(error);
+        return res.json({message: 'Server error'})
+    }
+}
