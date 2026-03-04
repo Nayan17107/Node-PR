@@ -14,8 +14,11 @@ exports.verifyTokenAdmin = async (req, res, next) => {
 
     if (!admin) {
         return res.json({ message: "Invalid Token" });
-    } else {
-        req.admin = admin;
-        next();
     }
+    if (admin.isDelete || admin.role !== 'admin') {
+        return res.status(403).json({ message: 'Forbidden: admin only' });
+    }
+
+    req.admin = admin;
+    next();
 };
