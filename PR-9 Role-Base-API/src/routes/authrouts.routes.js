@@ -11,8 +11,8 @@ routes.post("/update-admin", verifyTokenAdmin, upload.single('profileImage'), up
 routes.post("/change-password", verifyTokenAdmin, changePassword);
 routes.delete("/delete-admin", verifyTokenAdmin, deleteadmin);
 routes.post("/add-manager", verifyTokenAdmin, upload.single('profileImage'), addManager);
-routes.get("/managers", verifyTokenAdmin, getAllManagers);
-routes.delete("/managers/:managerId", verifyTokenAdmin, deleteManager);
-routes.post("/managers/:managerId/change-password", verifyTokenAdmin, changeManagerPassword);
+routes.get("/all-managers", verifyTokenAdmin, getAllManagers);
+routes.delete("/manager/:managerId", verifyTokenAdmin, deleteManager);
+routes.post("/manager/:managerId/change-password", verifyTokenAdmin, changeManagerPassword);
 
 module.exports = routes;
