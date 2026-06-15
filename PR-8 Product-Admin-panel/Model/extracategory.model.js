@@ -14,4 +14,4 @@ const extracategorySchiema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('ExtraCategory', extracategorySchiema);
+module.exports = mongoose.models.ExtraCategory || mongoose.model('ExtraCategory', extracategorySchiema);

@@ -9,4 +9,4 @@ const categorySchiema = mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('Category', categorySchiema);
+module.exports = mongoose.models.Category || mongoose.model('Category', categorySchiema);
