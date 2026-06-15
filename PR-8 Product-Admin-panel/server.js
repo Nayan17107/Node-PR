@@ -34,6 +34,25 @@ app.use('/', require('./Routes/index.routes'))
 
 app.use('/web', require('./Routes/web.routes'))
 
+// 404 handler
+app.use((req, res) => {
+    res.status(404).send('Page not found')
+})
+
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error('ERROR:', err)
+    console.error('Stack:', err.stack)
+    console.error('URL:', req.originalUrl)
+    console.error('Method:', req.method)
+    
+    res.status(err.status || 500).send(`
+        <h1>Internal Server Error</h1>
+        <p>${err.message}</p>
+        <pre>${err.stack}</pre>
+    `)
+})
+
 app.listen(port, () => {
     console.log(`server start at http://localhost:${port}`)
 })
