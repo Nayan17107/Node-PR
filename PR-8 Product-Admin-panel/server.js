@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport')
-require('./Middleware/localstrategy');  
+require('./Middleware/localstrategy');
 const session = require('express-session');
 const flash = require('connect-flash');
 const flashMessage = require('./Middleware/flashMessage');
@@ -18,7 +18,7 @@ app.use(session({
     name: 'login',
     secret: 'devlop',
     saveUninitialized: false,
-    resave: false, 
+    resave: false,
     cookie: {
         maxAge: 1000 * 60 * 60
     }
@@ -45,7 +45,7 @@ app.use((err, req, res, next) => {
     console.error('Stack:', err.stack)
     console.error('URL:', req.originalUrl)
     console.error('Method:', req.method)
-    
+
     res.status(err.status || 500).send(`
         <h1>Internal Server Error</h1>
         <p>${err.message}</p>
